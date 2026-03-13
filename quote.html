@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get a Free Quote | Solectrik Energy</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Inline CSS for the AJAX success state to ensure it matches your theme */
+    #quote-status {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid rgba(60, 255, 136, 0.3);
+      text-align: center;
+      margin-top: 20px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    #quote-status h3 { color: #3cff88; margin-bottom: 10px; }
+    #quote-status p { color: #b5dfff; line-height: 1.6; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Styling for select dropdown to match your inputs */
+    .quote-form select {
+      width: 100%;
+      padding: 14px;
+      background: #010d17;
+      border: 1px solid rgba(0,229,255,0.2);
+      color: #ffffff;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      outline: none;
+      cursor: pointer;
+    }
+    .quote-form select option { background: #010d17; }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="assets/logo.avif" alt="Logo"> 
+    <span style="color:#fe9d26;">S</span><span style="color:#2d529d;">olectri</span><span style="color:#fe9d26;">k</span> <span>Energy</span>
+  </div>
+  <nav>
+      <a href="index.html">Home</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="projects.html">Projects</a>
+      <a href="quote.html" class="btn-primary">Get a Free Quote</a>
+    </nav>
+</header>
+
+<section class="page-hero quote-hero">
+  <h1>Get a Free Solar Quote</h1>
+  <p>Smart energy starts with the right plan — let us design it for you</p>
+</section>
+
+<section class="quote-section">
+  <div class="quote-container">
+
+    <div class="quote-info">
+      <h2>Why Choose Solectrik?</h2>
+      <ul>
+        <li>⚡ AI-assisted energy assessment</li>
+        <li>🌍 Sustainable & future-ready systems</li>
+        <li>🔋 High-efficiency solar & EV solutions</li>
+        <li>📊 Smart monitoring & analytics</li>
+      </ul>
+
+      <div class="tech-stats">
+        <div>
+          <h3>25+</h3>
+          <p>MW Installed</p>
+        </div>
+        <div>
+          <h3>98%</h3>
+          <p>Client Satisfaction</p>
+        </div>
+        <div>
+          <h3>24/7</h3>
+          <p>Monitoring</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-form">
+      <h2>Request Your Quote</h2>
+      
+      <form id="solectrik-quote-form" action="https://formspree.io/f/mvzwrnvn" method="POST">
+        
+        <input type="hidden" name="_subject" value="New Solar Quote Request - Solectrik Energy">
+
+        <div class="form-grid">
+          <input type="text" name="name" placeholder="Full Name" required>
+          <input type="email" name="email" placeholder="Email Address" required>
+          <input type="tel" name="phone" placeholder="Phone Number" required>
+          <input type="text" name="location" placeholder="City / Location" required>
+        </div>
+
+        <select name="service_type" required>
+          <option value="" disabled selected>Select Service</option>
+          <option value="Residential Solar">Residential Solar</option>
+          <option value="Commercial Solar">Commercial Solar</option>
+          <option value="Industrial Solar">Industrial Solar</option>
+          <option value="EV Charging">EV Charging Infrastructure</option>
+          <option value="Energy Storage">Energy Storage Systems</option>
+        </select>
+
+        <input type="number" name="electricity_bill" placeholder="Approx Monthly Electricity Bill (₹)">
+
+        <textarea name="requirements" rows="4" placeholder="Additional Requirements"></textarea>
+
+        <button type="submit" id="submit-btn">Get Free Quote</button>
+      </form>
+
+      <div id="quote-status" style="display:none;">
+        <h3>Request Received!</h3>
+        <p>Thank you. Our technical team is reviewing your energy profile and will contact you within 24 hours with a customized plan.</p>
+        <button onclick="location.reload()" class="btn-outline" style="margin-top:15px; padding: 10px 20px; border: 1px solid #3cff88; background: transparent; color: #3cff88; border-radius: 8px; cursor: pointer;">Send Another</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <div class="logo footer-logo">
+        <img src="assets/logo.avif" alt="Solectrik Logo" style="width: 100%; height: 150px; object-fit: contain; border-radius: 8px; border:0;">
+      </div>
+    </div>
+
+    <div class="footer-center" style="display: flex; flex-direction: column; align-items: center;">
+      <div style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-bottom: 20px;">
+        <a href="quote.html" class="btn-primary" style="display:inline-block; text-decoration:none;">Get a Free Quote</a>
+        <p> Contact Us on: 7774046466 | support@solectrikenergy.in</p>
+      </div>
+      <h3>Follow Us</h3>
+      <div class="social-icons" style="display:flex; gap:15px; margin-top:15px;">
+        <a href="https://www.facebook.com/share/14UQG4JxHS2/" aria-label="Facebook">
+          <svg width="35" height="35" viewBox="0 0 24 24" fill="#3cff88"><path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.597 1.323-1.324V1.325C24 .597 23.403 0 22.675 0z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/solectrik.energy?igsh=MXB3MW9oaTg5NHF5ag==" aria-label="Instagram">
+          <svg width="35" height="35" viewBox="0 0 24 24" fill="#3cff88"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg width="35" height="35" viewBox="0 0 24 24" fill="#3cff88"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-right">
+      <h3>Our Location</h3>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121059.04712156033!2d73.78056541640624!3d18.5245452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43100dd3f51!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1710334800000!5m2!1sen!2sin" 
+        width="100%" 
+        height="150" 
+        style="border:0; border-radius: 8px;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p class="copyright">© 2026 Solectrik Energy. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const quoteForm = document.getElementById("solectrik-quote-form");
+  const quoteStatus = document.getElementById("quote-status");
+  const quoteBtn = document.getElementById("submit-btn");
+
+  async function handleQuoteSubmit(event) {
+    event.preventDefault();
+    
+    quoteBtn.disabled = true;
+    quoteBtn.innerText = "Sending Request...";
+    
+    const formData = new FormData(event.target);
+    
+    fetch(event.target.action, {
+      method: quoteForm.method,
+      body: formData,
+      headers: {
+          'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        quoteForm.style.display = "none";
+        quoteStatus.style.display = "block";
+      } // Replace the 'else' part of your fetch logic with this:
+      else {
+  response.json().then(data => {
+    if (Object.hasOwn(data, 'errors')) {
+      // This will show you exactly which field is failing
+      alert("Error: " + data["errors"].map(error => error["message"]).join(", "));
+    } else {
+      alert("Formspree Error: " + response.statusText);
+    }
+  });
+  quoteBtn.disabled = false;
+  quoteBtn.innerText = "Get Free Quote";
+}
+    }).catch(error => {
+        alert("Connection error. Please try again later.");
+        quoteBtn.disabled = false;
+        quoteBtn.innerText = "Get Free Quote";
+    });
+  }
+
+  quoteForm.addEventListener("submit", handleQuoteSubmit);
+</script>
+
+</body>
+</html>
