@@ -285,3 +285,16 @@ function closeLightbox(event) {
     startGalleryAutoPlay(); 
   }
 }
+
+// ==========================================
+// 5. MOBILE HAMBURGER MENU LOGIC
+// ==========================================
+const mobileMenu = document.getElementById('mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+
+if (mobileMenu && navLinks) {
+  mobileMenu.addEventListener('click', () => {
+    // Toggle the 'active' class to slide the menu in and out
+    navLinks.classList.toggle('active');
+  });
+}
