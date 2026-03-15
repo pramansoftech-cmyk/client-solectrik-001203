@@ -160,6 +160,106 @@ nav a:hover, nav a.active {
   flex: 1;
 }
 
+/* ================= PM SURYA GHAR SUBSIDY BANNER ================= */
+.subsidy-banner {
+  padding: 40px 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.subsidy-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255, 153, 51, 0.08)); /* Saffron hint for Govt scheme */
+  border: 1px solid rgba(255, 153, 51, 0.3);
+  padding: 40px;
+  gap: 40px;
+  border-radius: 20px;
+  text-align: left;
+}
+
+.subsidy-content {
+  flex: 1;
+}
+
+.subsidy-badge {
+  display: inline-block;
+  background: #ff9933; /* Saffron color */
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.subsidy-content h2 {
+  font-size: 34px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.subsidy-sub {
+  color: #00e5ff;
+  font-size: 18px;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.subsidy-list {
+  list-style: none;
+  margin-bottom: 30px;
+}
+
+.subsidy-list li {
+  margin-bottom: 14px;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.subsidy-list li strong {
+  color: #3cff88;
+}
+
+.subsidy-image {
+  flex: 0.7;
+  position: relative;
+  text-align: center;
+}
+
+.subsidy-image img {
+  max-width: 100%;
+  height: auto;
+  max-height: 350px;
+  border-radius: 12px;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+}
+
+.scheme-logo-text {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);
+  width: 80%;
+}
+
+.scheme-logo-text span {
+  color: #ff9933;
+  font-size: 14px;
+}
+
+
 /* Video Section */
 .extended {
   position: relative;
@@ -751,10 +851,28 @@ video.gallery-img { background-color: #000; }
   .hero-buttons a { width: 100%; max-width: 300px; }
 
   /* Sections Paddings Reduced */
-  .dashboard, .features, .simulator, .projects, .trust, .about-section, .projects-section, .extended-content, .quote-section, .about-metrics, .project-stats {
+  .dashboard, .features, .simulator, .projects, .trust, .about-section, .projects-section, .extended-content, .quote-section, .about-metrics, .project-stats, .subsidy-banner {
     padding: 40px 20px;
   }
   
+  /* PM Surya Ghar specific mobile fixes */
+  .subsidy-container {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 30px 20px;
+  }
+  
+  .subsidy-list li {
+    text-align: left; /* Keep list readable */
+  }
+
+  .scheme-logo-text {
+    position: relative;
+    bottom: 0;
+    margin-top: -20px;
+    width: 90%;
+  }
+
   /* Adjust Cards and Galleries for Small Screens */
   .gallery-img { width: 260px; height: 190px; }
   .quote-form { padding: 25px; }
