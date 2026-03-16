@@ -38,7 +38,7 @@
     <p>Advanced Solar Technology for Maximum Efficiency & Savings</p>
     <div class="hero-buttons">
       <a href="quote.html" class="btn-primary">Get a Free Quote</a>
-      <a href="youtube.com" class="btn-outline" style="text-decoration: none; display: inline-block;">Book Consultation</a>
+      <a href="#" class="btn-outline" onclick="openConsultationModal(event)" style="text-decoration: none; display: inline-block;">Book Consultation</a>
     </div>
   </div>
 </section>
@@ -183,6 +183,37 @@
   </div>
 </section>
 
+<div id="consultationModal" class="lightbox" onclick="closeConsultationModal(event)">
+  <div class="lightbox-content consultation-form-wrapper">
+    <span class="close-lightbox" onclick="closeConsultationModal(event)">×</span>
+    <h2>Book Your Consultation</h2>
+    <p style="text-align: center; color: #b5dfff; margin-bottom: 20px; font-size: 14px;">Take the first step towards clean energy and massive savings.</p>
+    
+    <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
+      <input type="text" id="waName" placeholder="Full Name" required class="modal-input">
+      
+      <div style="display: flex; gap: 10px;">
+        <input type="tel" id="waMobile" placeholder="Mobile Number" required class="modal-input">
+        <input type="tel" id="waWhatsapp" placeholder="WhatsApp Number" required class="modal-input">
+      </div>
+      
+      <div style="display: flex; gap: 10px;">
+        <input type="date" id="waDate" required class="modal-input" style="color: #aaa;">
+        <select id="waTime" required class="modal-input">
+          <option value="" disabled selected>Select Time Slot</option>
+          <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
+          <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM - 4 PM)</option>
+          <option value="Evening (4 PM - 7 PM)">Evening (4 PM - 7 PM)</option>
+        </select>
+      </div>
+
+      <textarea id="waAddress" placeholder="Full Address" rows="3" required class="modal-input"></textarea>
+      
+      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Confirm Booking via WhatsApp</button>
+    </form>
+  </div>
+</div>
+
 <footer class="main-footer">
   <div class="footer-container">
     
@@ -214,7 +245,7 @@
 
     <div class="footer-right">
       <h3>Our Location</h3>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121059.04712156033!2d73.78056541640624!3d18.5245452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2e67461101%3A0x828d43100dd3f51!2sPune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1710334800000!5m2!1sen!2sin" 
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.688361450082!2d79.06720257504901!3d21.2045353804892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4576cf4c19aed%3A0x656e9c81407a2f63!2sSolectrik%20Energy!5e0!3m2!1sen!2sin!4v1773389867859!5m2!1sen!2sin" 
         width="100%" 
         height="150" 
         style="border:0; border-radius: 8px;" 

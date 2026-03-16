@@ -298,3 +298,50 @@ if (mobileMenu && navLinks) {
     navLinks.classList.toggle('active');
   });
 }
+
+// ==========================================
+// 6. CONSULTATION POP-UP & WHATSAPP LOGIC
+// ==========================================
+const consultationModal = document.getElementById('consultationModal');
+
+function openConsultationModal(event) {
+  if(event) event.preventDefault();
+  if(consultationModal) {
+    consultationModal.classList.add('show');
+  }
+}
+
+function closeConsultationModal(event) {
+  // Close if they click the background OR the 'X'
+  if (event.target === consultationModal || event.target.classList.contains('close-lightbox')) {
+    consultationModal.classList.remove('show');
+  }
+}
+
+function sendToWhatsApp(event) {
+  event.preventDefault();
+  
+  // Get values from the form
+  const name = document.getElementById('waName').value;
+  const mobile = document.getElementById('waMobile').value;
+  const whatsapp = document.getElementById('waWhatsapp').value;
+  const date = document.getElementById('waDate').value;
+  const time = document.getElementById('waTime').value;
+  const address = document.getElementById('waAddress').value;
+  
+  // The Company's WhatsApp Number (Include country code, no + or spaces)
+  const companyNumber = "917774046466"; 
+
+  // Format the message that will be sent TO the company
+  const message = `Hello Solectrik Energy! ☀️\nI would like to book a solar consultation.\n\n*Client Details:*\n👤 Name: ${name}\n📱 Mobile: ${mobile}\n💬 WhatsApp: ${whatsapp}\n📅 Date: ${date}\n⏰ Time Slot: ${time}\n📍 Address: ${address}\n\nPlease confirm my booking.`;
+
+  // Create the WhatsApp URL
+  const whatsappUrl = `https://wa.me/${companyNumber}?text=${encodeURIComponent(message)}`;
+  
+  // Open WhatsApp in a new tab
+  window.open(whatsappUrl, '_blank');
+  
+  // Close the modal and reset the form
+  consultationModal.classList.remove('show');
+  document.getElementById('whatsappForm').reset();
+}

@@ -797,6 +797,51 @@ video.gallery-img { background-color: #000; }
 
 .footer-bottom .copyright { color: #777; font-size: 14px; }
 
+/* ================= CONSULTATION MODAL ================= */
+.consultation-form-wrapper {
+  background: #050f19;
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(60, 255, 136, 0.3);
+  width: 90%;
+  max-width: 550px;
+  position: relative;
+  background-image: radial-gradient(circle at top right, rgba(60, 255, 136, 0.05), transparent 50%);
+}
+
+.consultation-form-wrapper h2 {
+  color: #3cff88;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.consultation-form-wrapper .close-lightbox {
+  top: 15px;
+  right: 25px;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  background: #010d17;
+  border: 1px solid rgba(60, 255, 136, 0.25);
+  color: #ffffff;
+  border-radius: 10px;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-input:focus {
+  border-color: #3cff88;
+  box-shadow: 0 0 10px rgba(60, 255, 136, 0.1);
+}
+
+/* Fix calendar icon color for date picker */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
 
 /* ================= MOBILE RESPONSIVENESS ================= */
 @media screen and (max-width: 900px) {
@@ -878,4 +923,5 @@ video.gallery-img { background-color: #000; }
   .quote-form { padding: 25px; }
   .footer-container { flex-direction: column; text-align: center; gap: 30px;}
   .footer-right iframe { max-width: 100%; margin: auto; }
+  .consultation-form-wrapper { padding: 25px; }
 }
