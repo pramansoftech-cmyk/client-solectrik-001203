@@ -11,6 +11,49 @@ body {
   overflow-x: hidden; /* Prevents horizontal scrolling on mobile */
 }
 
+
+/* ================= URGENCY ALERT BANNER ================= */
+.urgency-alert {
+  background: rgba(255, 60, 60, 0.15);
+  border-left: 4px solid #ff3c3c;
+  padding: 12px 18px;
+  border-radius: 4px 8px 8px 4px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: #ffe6e6;
+  animation: subtlePulse 2s infinite;
+}
+
+.urgency-alert strong {
+  color: #ff3c3c;
+  letter-spacing: 0.5px;
+}
+
+.pulse-dot {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  background-color: #ff3c3c;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff3c3c;
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes subtlePulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0.2); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 60, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0); }
+}
+
+
 /* ================= NAVBAR & LOGO ================= */
 .navbar {
   display: flex;
