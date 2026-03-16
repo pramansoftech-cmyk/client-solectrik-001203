@@ -1048,3 +1048,53 @@ a.logo {
     height: 30px;
   }
 }
+
+
+/* ================= FLOATING SOLAR WASH BUTTON ================= */
+.floating-wash {
+  position: fixed;
+  bottom: 105px; /* Sits right above the WhatsApp button */
+  right: 30px;
+  background: linear-gradient(135deg, #00e5ff, #0077ff);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+  z-index: 10000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floatBounce 3s infinite ease-in-out;
+}
+
+.floating-wash:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.7);
+  animation-play-state: paused;
+}
+
+.floating-wash svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+/* Gentle floating animation */
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 768px) {
+  .floating-wash {
+    bottom: 90px;
+    right: 20px;
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+}
