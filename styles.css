@@ -1098,3 +1098,57 @@ a.logo {
     font-size: 12px;
   }
 }
+
+
+/* ================= SOLAR WASHING SECTION ================= */
+.washing-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  padding: 40px;
+  border-radius: 16px;
+}
+
+.washing-text {
+  flex: 1;
+  min-width: 300px;
+  text-align: left;
+}
+
+.washing-form-box {
+  flex: 0.8;
+  min-width: 300px;
+  background: rgba(1, 13, 23, 0.8);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(60, 255, 136, 0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  width: 100%;
+}
+
+/* Solar Washing Mobile Adjustments */
+@media screen and (max-width: 768px) {
+  .washing-container {
+    padding: 25px 20px;
+    gap: 30px;
+  }
+  .washing-text {
+    text-align: center;
+  }
+  .washing-text h2 {
+    font-size: 26px !important;
+  }
+  .washing-text ul {
+    text-align: left; /* Keep bullets readable on mobile */
+    display: inline-block; /* Centers the bullet block */
+  }
+  .washing-form-box {
+    padding: 25px 20px;
+    flex: 1;
+  }
+}
