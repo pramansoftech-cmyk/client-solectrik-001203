@@ -24,7 +24,14 @@ body {
   gap: 12px;
   font-size: 15px;
   color: #ffe6e6;
+  
+  /* NEW: Forces mobile browsers to render the animation smoothly */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: box-shadow;
+  
   animation: subtlePulse 2s infinite;
+  -webkit-animation: subtlePulse 2s infinite;
 }
 
 .urgency-alert strong {
@@ -36,24 +43,49 @@ body {
   width: 12px;
   height: 12px;
   min-width: 12px;
+  min-height: 12px;
   background-color: #ff3c3c;
   border-radius: 50%;
   box-shadow: 0 0 10px #ff3c3c;
+  
+  /* NEW: Hardware acceleration for the dot */
+  will-change: opacity, transform;
+  
   animation: blink 1s infinite alternate;
+  -webkit-animation: blink 1s infinite alternate;
 }
 
+/* Safari/Webkit specific keyframes for maximum compatibility */
+@-webkit-keyframes blink {
+  0% { opacity: 1; -webkit-transform: scale(1); }
+  100% { opacity: 0.4; -webkit-transform: scale(0.8); }
+}
 @keyframes blink {
   0% { opacity: 1; transform: scale(1); }
   100% { opacity: 0.4; transform: scale(0.8); }
 }
 
+@-webkit-keyframes subtlePulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0.2); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 60, 60, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0); }
+}
 @keyframes subtlePulse {
   0% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0.2); }
   70% { box-shadow: 0 0 0 10px rgba(255, 60, 60, 0); }
   100% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0); }
 }
 
-
+/* Urgency Alert Mobile Layout Fixes */
+  .urgency-alert {
+    align-items: flex-start; /* Keeps the dot at the top */
+    text-align: left; /* Overrides the center alignment on mobile */
+    font-size: 14px;
+    padding: 15px;
+  }
+  .pulse-dot {
+    margin-top: 4px; /* Aligns the dot perfectly with the first line of text */
+  }
 /* ================= NAVBAR & LOGO ================= */
 .navbar {
   display: flex;
