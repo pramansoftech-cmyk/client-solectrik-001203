@@ -14,7 +14,7 @@
 
 <header class="navbar">
   <div class="logo">
-   <a href="index.html" class="logo">
+   <a href="index.html" class="logo" style="text-decoration: none;">
     <img src="assets/logo.png" alt="Solectrik Logo"> 
     <span style="color:#fe9d26;">S</span><span style="color:#2d529d;">olectri</span><span style="color:#fe9d26;">k</span> <span style="color:#61e57b; margin-left:5px;">Energy</span>
   </a>
@@ -157,6 +157,43 @@
       </div>
     </section>
 
+    <section class="washing-service" style="padding: 40px 20px; background: rgba(5, 15, 25, 0.6); border-top: 1px solid rgba(60, 255, 136, 0.2); border-bottom: 1px solid rgba(60, 255, 136, 0.2);">
+      <div class="glass-card wide" style="display: flex; flex-wrap: wrap; align-items: center; gap: 40px; max-width: 1100px; margin: 0 auto; background: rgba(255,255,255,0.03); border: 1px solid rgba(0, 229, 255, 0.15);">
+        
+        <div style="flex: 1; min-width: 300px; text-align: left;">
+          <h2 style="font-size: 32px; color: #ffffff; margin-bottom: 15px;">Maximize Your Solar Efficiency! ☀️🧼</h2>
+          <p style="color: #b5dfff; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+            Already have a solar system? Dust, dirt, and bird droppings can reduce your energy generation by up to 25%. Book our professional <strong>Solar Panel Washing Service</strong> today to keep your panels shining and operating at peak performance.
+          </p>
+          <ul style="list-style: none; color: #ccc; margin-bottom: 20px; line-height: 1.8;">
+            <li>✨ Deep cleaning with specialized equipment</li>
+            <li>🔋 Instantly boost your energy production</li>
+            <li>🛡️ Prolong the lifespan of your panels</li>
+          </ul>
+        </div>
+
+        <div style="flex: 0.8; min-width: 300px; background: rgba(1, 13, 23, 0.8); padding: 30px; border-radius: 16px; border: 1px solid rgba(60, 255, 136, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <h3 style="color: #3cff88; margin-bottom: 20px; text-align: center;">Book a Wash Now</h3>
+          
+          <form id="washingForm" onsubmit="sendWashingForm(event)" action="https://formspree.io/f/xnjggjnl" method="POST">
+            <input type="hidden" name="_subject" value="New Solar Panel Washing Booking!">
+            
+            <input type="text" name="Client Name" placeholder="Your Full Name" required style="width: 100%; padding: 14px; margin-bottom: 15px; background: #051525; border: 1px solid rgba(60, 255, 136, 0.3); color: #ffffff; border-radius: 10px; outline: none; font-family: 'Inter', sans-serif;">
+            
+            <input type="tel" name="Mobile Number" placeholder="Your Mobile Number" required style="width: 100%; padding: 14px; margin-bottom: 20px; background: #051525; border: 1px solid rgba(60, 255, 136, 0.3); color: #ffffff; border-radius: 10px; outline: none; font-family: 'Inter', sans-serif;">
+            
+            <button type="submit" id="washBtn" class="btn-primary" style="width: 100%;">Schedule Cleaning</button>
+          </form>
+
+          <div id="washSuccess" style="display: none; text-align: center; margin-top: 15px;">
+            <h4 style="color: #3cff88; font-size: 18px;">✅ Booking Received!</h4>
+            <p style="color: #b5dfff; font-size: 14px; margin-top: 5px;">Our team will call you shortly to confirm your time slot.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <section class="projects">
       <h2>Our Deliverables</h2>
       <div class="project-grid">
@@ -288,5 +325,39 @@
 </a>
 
 <script src="script.js"></script>
+
+<script>
+  async function sendWashingForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const btn = document.getElementById("washBtn");
+    const successMsg = document.getElementById("washSuccess");
+    
+    btn.disabled = true;
+    btn.innerText = "Sending Booking...";
+    
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      
+      if (response.ok) {
+        form.style.display = "none";
+        successMsg.style.display = "block";
+      } else {
+        alert("Oops! Something went wrong submitting your form.");
+        btn.disabled = false;
+        btn.innerText = "Schedule Cleaning";
+      }
+    } catch (error) {
+      alert("Connection error. Please check your internet.");
+      btn.disabled = false;
+      btn.innerText = "Schedule Cleaning";
+    }
+  }
+</script>
+
 </body>
 </html>
