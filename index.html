@@ -189,7 +189,7 @@
     <h2>Book Your Consultation</h2>
     <p style="text-align: center; color: #b5dfff; margin-bottom: 20px; font-size: 14px;">Take the first step towards clean energy and massive savings.</p>
     
-    <form id="consultationForm" onsubmit="sendToEmail(event)" action="https://formspree.io/f/mvzwrnvn" method="POST">
+    <form id="consultationForm" onsubmit="sendToEmail(event)" action="https://formspree.io/f/xnjggjnl" method="POST">
       
       <input type="hidden" name="_subject" value="New Consultation Booking - Solectrik Energy">
       
@@ -201,7 +201,8 @@
       </div>
       
       <div style="display: flex; gap: 10px;">
-        <input type="date" name="Requested Date" id="userDate" required class="modal-input" style="color: #aaa;">
+        <input type="text" name="Requested Date" id="userDate" placeholder="Select Date" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" required class="modal-input">
+        
         <select name="Time Slot" id="userTime" required class="modal-input">
           <option value="" disabled selected>Select Time Slot</option>
           <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
