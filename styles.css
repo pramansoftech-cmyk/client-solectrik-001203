@@ -925,3 +925,51 @@ video.gallery-img { background-color: #000; }
   .footer-right iframe { max-width: 100%; margin: auto; }
   .consultation-form-wrapper { padding: 25px; }
 }
+
+/* ================= FLOATING WHATSAPP BUTTON ================= */
+.floating-wa {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25D366; /* Official WhatsApp Green */
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: 10000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floating-wa:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+}
+
+.floating-wa svg {
+  width: 35px;
+  height: 35px;
+  fill: white;
+}
+
+/* Fix logo link styling so it doesn't get underlined */
+a.logo {
+  text-decoration: none;
+}
+
+/* Scale down the WhatsApp button slightly on mobile */
+@media screen and (max-width: 768px) {
+  .floating-wa {
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+  }
+  .floating-wa svg {
+    width: 30px;
+    height: 30px;
+  }
+}
