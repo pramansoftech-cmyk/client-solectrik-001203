@@ -300,7 +300,7 @@ if (mobileMenu && navLinks) {
 }
 
 // ==========================================
-// 6. CONSULTATION POP-UP & WHATSAPP LOGIC
+// 6. CONSULTATION POP-UP & EMAIL LOGIC
 // ==========================================
 const consultationModal = document.getElementById('consultationModal');
 
@@ -308,40 +308,60 @@ function openConsultationModal(event) {
   if(event) event.preventDefault();
   if(consultationModal) {
     consultationModal.classList.add('show');
+    // Reset the modal view just in case they open it again after submitting
+    document.getElementById('consultationForm').style.display = 'block';
+    document.getElementById('consultSuccess').style.display = 'none';
+    document.getElementById('consultationForm').reset();
   }
 }
 
 function closeConsultationModal(event) {
-  // Close if they click the background OR the 'X'
-  if (event.target === consultationModal || event.target.classList.contains('close-lightbox')) {
+  // Close if they click the background, the 'X', or the 'Close Window' button
+  if (!event || event.target === consultationModal || event.target.classList.contains('close-lightbox') || event.target.innerText === 'Close Window') {
     consultationModal.classList.remove('show');
   }
 }
 
-function sendToWhatsApp(event) {
-  event.preventDefault();
+async function sendToEmail(event) {
+  event.preventDefault(); // Stop the page from refreshing
   
-  // Get values from the form
-  const name = document.getElementById('waName').value;
-  const mobile = document.getElementById('waMobile').value;
-  const whatsapp = document.getElementById('waWhatsapp').value;
-  const date = document.getElementById('waDate').value;
-  const time = document.getElementById('waTime').value;
-  const address = document.getElementById('waAddress').value;
+  const form = document.getElementById('consultationForm');
+  const btn = document.getElementById('consultBtn');
+  const successMsg = document.getElementById('consultSuccess');
   
-  // The Company's WhatsApp Number (Include country code, no + or spaces)
-  const companyNumber = "917774046466"; 
-
-  // Format the message that will be sent TO the company
-  const message = `Hello Solectrik Energy! ☀️\nI would like to book a solar consultation.\n\n*Client Details:*\n👤 Name: ${name}\n📱 Mobile: ${mobile}\n💬 WhatsApp: ${whatsapp}\n📅 Date: ${date}\n⏰ Time Slot: ${time}\n📍 Address: ${address}\n\nPlease confirm my booking.`;
-
-  // Create the WhatsApp URL
-  const whatsappUrl = `https://wa.me/${companyNumber}?text=${encodeURIComponent(message)}`;
+  // Change button text to show it's loading
+  btn.disabled = true;
+  btn.innerText = "Sending Booking...";
   
-  // Open WhatsApp in a new tab
-  window.open(whatsappUrl, '_blank');
+  const formData = new FormData(form);
   
-  // Close the modal and reset the form
-  consultationModal.classList.remove('show');
-  document.getElementById('whatsappForm').reset();
+  // Send data to Formspree silently in the background
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: {
+          'Accept': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      // SUCCESS! Hide the form inputs and show the Greeting Message
+      form.style.display = "none";
+      successMsg.style.display = "block";
+    } else {
+      const data = await response.json();
+      if (Object.hasOwn(data, 'errors')) {
+        alert("Error: " + data["errors"].map(error => error["message"]).join(", "));
+      } else {
+        alert("Oops! There was a problem submitting your form");
+      }
+    }
+  } catch (error) {
+    alert("Connection error. Please check your internet and try again.");
+  }
+  
+  // Reset button state
+  btn.disabled = false;
+  btn.innerText = "Confirm Booking";
 }

@@ -189,17 +189,20 @@
     <h2>Book Your Consultation</h2>
     <p style="text-align: center; color: #b5dfff; margin-bottom: 20px; font-size: 14px;">Take the first step towards clean energy and massive savings.</p>
     
-    <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
-      <input type="text" id="waName" placeholder="Full Name" required class="modal-input">
+    <form id="consultationForm" onsubmit="sendToEmail(event)" action="https://formspree.io/f/mvzwrnvn" method="POST">
+      
+      <input type="hidden" name="_subject" value="New Consultation Booking - Solectrik Energy">
+      
+      <input type="text" name="Client Name" id="userName" placeholder="Full Name" required class="modal-input">
       
       <div style="display: flex; gap: 10px;">
-        <input type="tel" id="waMobile" placeholder="Mobile Number" required class="modal-input">
-        <input type="tel" id="waWhatsapp" placeholder="WhatsApp Number" required class="modal-input">
+        <input type="tel" name="Mobile Number" id="userMobile" placeholder="Mobile Number" required class="modal-input">
+        <input type="email" name="email" id="userEmail" placeholder="Email Address" required class="modal-input">
       </div>
       
       <div style="display: flex; gap: 10px;">
-        <input type="date" id="waDate" required class="modal-input" style="color: #aaa;">
-        <select id="waTime" required class="modal-input">
+        <input type="date" name="Requested Date" id="userDate" required class="modal-input" style="color: #aaa;">
+        <select name="Time Slot" id="userTime" required class="modal-input">
           <option value="" disabled selected>Select Time Slot</option>
           <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
           <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM - 4 PM)</option>
@@ -207,10 +210,19 @@
         </select>
       </div>
 
-      <textarea id="waAddress" placeholder="Full Address" rows="3" required class="modal-input"></textarea>
+      <textarea name="Address" id="userAddress" placeholder="Full Address" rows="3" required class="modal-input"></textarea>
       
-      <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">Confirm Booking via WhatsApp</button>
+      <button type="submit" id="consultBtn" class="btn-primary" style="width: 100%; margin-top: 10px;">Confirm Booking</button>
     </form>
+
+    <div id="consultSuccess" style="display: none; text-align: center; padding: 20px 0;">
+      <h3 style="color: #3cff88; margin-bottom: 15px; font-size: 24px;">Booking Received! 🎉</h3>
+      <p style="color: #b5dfff; line-height: 1.6; margin-bottom: 20px;">
+        Thank you for booking your consultancy with Solectrik Energy! You have taken a fantastic first step towards saving money and protecting the environment. 🌍⚡<br><br>Our team is reviewing your details and will contact you shortly to confirm your time slot.
+      </p>
+      <button onclick="closeConsultationModal(event)" class="btn-outline">Close Window</button>
+    </div>
+
   </div>
 </div>
 
