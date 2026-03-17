@@ -5,7 +5,7 @@ let chart;
 
 function calculateSavings() {
   const billInput = document.getElementById("billInput");
-  if (!billInput) return; // Exit if not on the page with the calculator
+  if (!billInput) return;
 
   const bill = parseFloat(billInput.value);
 
@@ -15,14 +15,13 @@ function calculateSavings() {
   }
 
   const annualBill = bill * 12;
-  const baseSavings = annualBill * 0.8; // 80% savings efficiency
-  const inflationRate = 1.05; // 5% yearly electricity inflation
+  const baseSavings = annualBill * 0.8; 
+  const inflationRate = 1.05; 
 
   let savingsData = [];
   let currentSavings = baseSavings;
   let total30YearSavings = 0;
 
-  // Calculate 5-year graph data AND 30-year total savings
   for (let i = 0; i < 30; i++) {
     if (i < 5) {
         savingsData.push(Math.round(currentSavings));
@@ -31,17 +30,12 @@ function calculateSavings() {
     currentSavings *= inflationRate;
   }
 
-  // Calculate System Size Recommendation
-  // Assuming avg rate is ₹8/unit, and 1kW produces ~120 units/month.
-  // Formula: (Bill / Rate) / Units Per kW -> rough estimate: Bill / 900
   let recommendedKw = (bill / 900).toFixed(1);
-  if(recommendedKw < 1) recommendedKw = 1; // Minimum 1kW
+  if(recommendedKw < 1) recommendedKw = 1; 
 
-  // Show Result UI
   const resultCard = document.getElementById("resultCard");
   if (resultCard) resultCard.style.display = "block";
 
-  // Show Extended 30-year text and recommendation
   const extResults = document.getElementById("extended-results");
   if (extResults) {
     extResults.style.display = "block";
@@ -49,7 +43,6 @@ function calculateSavings() {
     document.getElementById("system-size-suggestion").innerHTML = `💡 Recommended System Size: ~${recommendedKw} kW`;
   }
 
-  // Draw Chart
   const chartCanvas = document.getElementById("savingsChart");
   if (!chartCanvas) return;
   const ctx = chartCanvas.getContext("2d");
@@ -88,7 +81,132 @@ function calculateSavings() {
 }
 
 // ==========================================
-// 2. MODAL LOGIC (CONSULTATION & SUBSIDY)
+// 2. DYNAMIC GALLERY LOADER & SLIDER (PROJECTS PAGE)
+// ==========================================
+const track = document.getElementById('galleryTrack');
+const basePath = './project-images/'; 
+const imageExts = ['jpg', 'png', 'jpeg', 'webp', 'avif']; 
+const videoExts = ['mp4', 'webm', 'ogg'];
+const allExts = [...imageExts, ...videoExts]; 
+const itemWidth = 320; 
+let autoPlayInterval;
+
+function loadGalleryMedia(index, extIndex = 0) {
+  if (!track) return; 
+
+  if (extIndex >= allExts.length) {
+    console.log(`Gallery loaded. Found ${index - 1} files.`);
+    startGalleryAutoPlay(); 
+    return;
+  }
+
+  const ext = allExts[extIndex];
+  const src = `${basePath}${index}.${ext}`;
+  const isVideo = videoExts.includes(ext);
+
+  if (isVideo) {
+    const vid = document.createElement('video');
+    vid.preload = 'metadata'; 
+    vid.onloadeddata = () => {
+      vid.className = 'gallery-img'; 
+      vid.autoplay = true; vid.muted = true; vid.loop = true; vid.playsInline = true;
+      vid.onclick = function() { openLightbox(this); };
+      track.appendChild(vid);
+      loadGalleryMedia(index + 1, 0); 
+    };
+    vid.onerror = () => { loadGalleryMedia(index, extIndex + 1); };
+    vid.src = src; 
+  } else {
+    const img = new Image();
+    img.onload = () => {
+      img.className = 'gallery-img'; 
+      img.onclick = function() { openLightbox(this); };
+      track.appendChild(img);
+      loadGalleryMedia(index + 1, 0); 
+    };
+    img.onerror = () => { loadGalleryMedia(index, extIndex + 1); };
+    img.src = src; 
+  }
+}
+
+function initGallery() {
+  if (document.getElementById('galleryTrack')) {
+    loadGalleryMedia(1, 0);
+  }
+}
+if (document.readyState === 'loading') { document.addEventListener("DOMContentLoaded", initGallery); } 
+else { initGallery(); }
+
+function moveGalleryNext() {
+  if (!track || track.children.length <= 1) return;
+  track.style.transition = 'transform 0.5s ease-in-out';
+  track.style.transform = `translateX(-${itemWidth}px)`;
+  setTimeout(() => {
+    track.style.transition = 'none';
+    track.appendChild(track.firstElementChild); 
+    track.style.transform = 'translateX(0)';
+  }, 500); 
+}
+
+function moveGalleryPrev() {
+  if (!track || track.children.length <= 1) return;
+  track.style.transition = 'none';
+  track.prepend(track.lastElementChild); 
+  track.style.transform = `translateX(-${itemWidth}px)`; 
+  void track.offsetWidth; 
+  track.style.transition = 'transform 0.5s ease-in-out';
+  track.style.transform = 'translateX(0)';
+}
+
+function startGalleryAutoPlay() {
+  if (track && track.children.length > 2) { 
+    autoPlayInterval = setInterval(moveGalleryNext, 3000);
+  }
+}
+
+function stopGalleryAutoPlay() { clearInterval(autoPlayInterval); }
+
+if (track) {
+  track.addEventListener('mouseenter', stopGalleryAutoPlay);
+  track.addEventListener('mouseleave', startGalleryAutoPlay);
+}
+document.querySelector('.next-arrow')?.addEventListener('click', () => { stopGalleryAutoPlay(); moveGalleryNext(); startGalleryAutoPlay(); });
+document.querySelector('.prev-arrow')?.addEventListener('click', () => { stopGalleryAutoPlay(); moveGalleryPrev(); startGalleryAutoPlay(); });
+
+// ==========================================
+// 3. PROJECT LIGHTBOX LOGIC
+// ==========================================
+const projectLightbox = document.getElementById('projectLightbox');
+const mediaContainer = document.getElementById('lightboxMediaContainer');
+
+function openLightbox(element) {
+  if (!projectLightbox || !mediaContainer) return;
+  mediaContainer.innerHTML = ''; 
+  let mediaClone;
+  if (element.tagName === 'VIDEO') {
+    mediaClone = document.createElement('video');
+    mediaClone.src = element.src; mediaClone.autoplay = true; mediaClone.controls = true; 
+  } else {
+    mediaClone = document.createElement('img');
+    mediaClone.src = element.src;
+  }
+  mediaClone.className = 'lightbox-content';
+  mediaContainer.appendChild(mediaClone);
+  projectLightbox.classList.add('show');
+  stopGalleryAutoPlay(); 
+}
+
+function closeLightbox(event) {
+  if (!projectLightbox) return;
+  if (event.target === projectLightbox || event.target.id === 'lightboxMediaContainer' || event.target.classList.contains('close-lightbox')) {
+    projectLightbox.classList.remove('show');
+    mediaContainer.innerHTML = ''; 
+    startGalleryAutoPlay(); 
+  }
+}
+
+// ==========================================
+// 4. CONSULTATION & SUBSIDY MODALS
 // ==========================================
 const consultationModal = document.getElementById('consultationModal');
 const subsidyModal = document.getElementById('subsidyModal');
@@ -109,7 +227,6 @@ function closeConsultationModal(event) {
   }
 }
 
-// NEW: Subsidy Modal Functions
 function openSubsidyModal(event) {
   if(event) event.preventDefault();
   if(subsidyModal) subsidyModal.classList.add('show');
@@ -122,54 +239,30 @@ function closeSubsidyModal(event) {
 }
 
 // ==========================================
-// 3. EMAIL LOGIC
+// 5. EMAIL LOGIC
 // ==========================================
 async function sendToEmail(event) {
   event.preventDefault(); 
-  
   const form = document.getElementById('consultationForm');
   const btn = document.getElementById('consultBtn');
   const successMsg = document.getElementById('consultSuccess');
   
-  btn.disabled = true;
-  btn.innerText = "Sending Booking...";
-  
-  const formData = new FormData(form);
+  btn.disabled = true; btn.innerText = "Sending Booking...";
   
   try {
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    });
-    
-    if (response.ok) {
-      form.style.display = "none";
-      successMsg.style.display = "block";
-    } else {
-      const data = await response.json();
-      if (Object.hasOwn(data, 'errors')) {
-        alert("Error: " + data["errors"].map(error => error["message"]).join(", "));
-      } else {
-        alert("Oops! There was a problem submitting your form");
-      }
-    }
-  } catch (error) {
-    alert("Connection error. Please check your internet and try again.");
-  }
-  
-  btn.disabled = false;
-  btn.innerText = "Confirm Booking";
+    const response = await fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' } });
+    if (response.ok) { form.style.display = "none"; successMsg.style.display = "block"; } 
+    else { alert("Oops! There was a problem submitting your form"); }
+  } catch (error) { alert("Connection error. Please check your internet and try again."); }
+  btn.disabled = false; btn.innerText = "Confirm Booking";
 }
 
 // ==========================================
-// 4. MOBILE HAMBURGER MENU
+// 6. MOBILE HAMBURGER MENU
 // ==========================================
 const mobileMenu = document.getElementById('mobile-menu');
 const navLinks = document.querySelector('.nav-links');
 
 if (mobileMenu && navLinks) {
-  mobileMenu.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-  });
+  mobileMenu.addEventListener('click', () => { navLinks.classList.toggle('active'); });
 }
