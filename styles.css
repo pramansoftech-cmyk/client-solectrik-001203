@@ -983,32 +983,34 @@ video.gallery-img { background-color: #000; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: 40px;
+  width: 100%; /* NEW: Forces container to stay inside screen */
   max-width: 1100px;
   margin: 0 auto;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(0, 229, 255, 0.15);
   padding: 40px;
   border-radius: 16px;
+  box-sizing: border-box; /* NEW: Keeps padding inside the width */
 }
 
 .washing-text {
-  flex: 1;
-  min-width: 300px;
+  flex: 1 1 300px; /* NEW: Allows it to shrink flexibly */
   text-align: left;
+  box-sizing: border-box;
 }
 
 .washing-form-box {
-  flex: 0.8;
-  min-width: 300px;
+  flex: 1 1 300px; /* NEW: Allows it to shrink flexibly */
   background: rgba(1, 13, 23, 0.8);
   padding: 30px;
   border-radius: 16px;
   border: 1px solid rgba(60, 255, 136, 0.4);
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   width: 100%;
+  box-sizing: border-box; /* NEW: Keeps padding inside the width */
 }
-
 
 /* ================= ALL MOBILE RESPONSIVENESS ================= */
 @media screen and (max-width: 900px) {
@@ -1121,23 +1123,28 @@ video.gallery-img { background-color: #000; }
     font-size: 12px;
   }
 
-  /* Solar Washing Mobile Adjustments */
+/* Solar Washing Mobile Adjustments */
   .washing-container {
-    padding: 25px 20px;
-    gap: 30px;
+    flex-direction: column; /* NEW: Forces them to stack vertically */
+    padding: 25px 15px;
+    gap: 25px;
+    width: 100%;
+    overflow: hidden; /* NEW: Cuts off any invisible bleeding edges */
   }
   .washing-text {
+    width: 100%;
+    flex: none; /* Stops it from trying to act like a flexible row */
     text-align: center;
   }
   .washing-text h2 {
-    font-size: 26px !important;
+    font-size: 24px !important;
   }
   .washing-text ul {
     text-align: left; 
     display: inline-block; 
   }
   .washing-form-box {
-    padding: 25px 20px;
-    flex: 1;
+    width: 100%;
+    flex: none; /* Stops it from trying to act like a flexible row */
+    padding: 25px 15px;
   }
-}
