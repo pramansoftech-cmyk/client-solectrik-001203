@@ -33,8 +33,9 @@
   </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-content">
+<section class="hero" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 40px; height: auto; min-height: 90vh; padding-top: 60px; padding-bottom: 60px;">
+  
+  <div class="hero-content" style="flex: 1; min-width: 320px;">
     <h1>Powering Homes with <span>Intelligent Solar Systems</span></h1>
     <p>Advanced Solar Technology for Maximum Efficiency & Savings</p>
     <div class="hero-buttons">
@@ -42,6 +43,34 @@
       <a href="#" class="btn-outline" onclick="openConsultationModal(event)" style="text-decoration: none; display: inline-block;">Book Consultation</a>
     </div>
   </div>
+
+  <div class="hero-modi" style="flex: 1; min-width: 320px; display: flex; justify-content: center; align-items: center;">
+    <div class="glass-card" style="background: rgba(0, 0, 0, 0.65); border: 1px solid rgba(255, 153, 51, 0.4); padding: 30px; border-radius: 20px; text-align: center; max-width: 450px; width: 100%;">
+      
+      <div class="subsidy-badge" style="background: #ff9933; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;">PM SURYA GHAR: MUFT BIJLI YOJANA</div>
+      
+      <div style="position: relative; margin-bottom: 25px; margin-top: 10px;">
+        <img src="assets/pm-modi.png" alt="Honorable PM Shri Narendra Modi" style="max-height: 250px; border-radius: 12px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));">
+        
+        <div class="scheme-logo-text" style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 13px; width: 85%; box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);">
+          Hon'ble Prime Minister <br><span style="color: #ff9933; font-size: 15px;">Shri Narendra Modi</span>
+        </div>
+      </div>
+
+      <div class="urgency-alert" style="margin-top: 30px; margin-bottom: 15px;">
+        <span class="pulse-dot"></span>
+        <p style="font-size: 14px;"><strong>ATTENTION:</strong> Over 80% of the government subsidy target is achieved! Book your solar installation now to secure your subsidy.</p>
+      </div>
+
+      <ul class="subsidy-list" style="text-align: left; font-size: 15px; margin-bottom: 25px;">
+        <li>✅ Get up to <strong>₹78,000 Central Subsidy</strong></li>
+        <li>✅ Enjoy up to <strong>300 Units</strong> free electricity</li>
+      </ul>
+      
+      <a href="quote.html" class="btn-primary" style="background: linear-gradient(135deg, #ff9933, #e67e22); color: #fff; width: 100%; box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);">Check Subsidy Eligibility Fast</a>
+    </div>
+  </div>
+
 </section>
 
 <section class="stats">
@@ -56,32 +85,6 @@
   <div class="stat-card">
     <h2>22,500+</h2>
     <p>Tons CO₂ Reduced</p>
-  </div>
-</section>
-
-<section class="subsidy-banner">
-  <div class="subsidy-container glass-card">
-    <div class="subsidy-content">
-      <div class="subsidy-badge">GOVERNMENT INITIATIVE</div>
-      <h2>PM Surya Ghar: Muft Bijli Yojana</h2>
-      
-      <div class="urgency-alert">
-        <span class="pulse-dot"></span>
-        <p><strong>ATTENTION:</strong> Over 80% of the government subsidy target has already been achieved! Book your solar installation now to secure your subsidy.</p>
-      </div>
-
-      <p class="subsidy-sub">National Portal for Rooftop Solar</p>
-      <ul class="subsidy-list">
-        <li>✅ Get up to <strong>₹78,000 Central Subsidy</strong> directly in your bank account.</li>
-        <li>✅ Enjoy up to <strong>300 Units</strong> of free electricity every month.</li>
-        <li>✅ Solectrik Energy is your trusted partner for hassle-free processing & installation.</li>
-      </ul>
-      <a href="quote.html" class="btn-primary" style="background: linear-gradient(135deg, #ff9933, #e67e22); color: #fff; box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);">Check Subsidy Eligibility Fast</a>
-    </div>
-    <div class="subsidy-image">
-      <img src="assets/pm-modi.png" alt="Honorable Prime Minister Shri Narendra Modi - PM Surya Ghar Yojana">
-      <div class="scheme-logo-text">PM Surya Ghar <br><span>Muft Bijli Yojana</span></div>
-    </div>
   </div>
 </section>
 
@@ -180,6 +183,7 @@
             
             <input type="text" name="Client Name" placeholder="Your Full Name" required class="modal-input">
             <input type="tel" name="Mobile Number" placeholder="Your Mobile Number" required class="modal-input">
+            <textarea name="Address" placeholder="Your Full Address" rows="2" required class="modal-input" style="resize: none;"></textarea>
             
             <button type="submit" id="washBtn" class="btn-primary" style="width: 100%;">Schedule Cleaning</button>
           </form>
@@ -240,14 +244,14 @@
       
       <div style="display: flex; gap: 10px;">
         <input type="tel" name="Mobile Number" id="userMobile" placeholder="Mobile Number" required class="modal-input">
-        <input type="email" name="email" id="userEmail" placeholder="Email Address (Optional)" class="modal-input">
+        <input type="email" name="email" id="userEmail" placeholder="Email (Optional)" class="modal-input">
       </div>
       
       <div style="display: flex; gap: 10px;">
-        <input type="text" name="Requested Date" id="userDate" placeholder="Select Date" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" required class="modal-input">
+        <input type="text" name="Requested Date" id="userDate" placeholder="Date (Optional)" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" class="modal-input">
         
-        <select name="Time Slot" id="userTime" required class="modal-input">
-          <option value="" disabled selected>Select Time Slot</option>
+        <select name="Time Slot" id="userTime" class="modal-input">
+          <option value="" disabled selected>Time Slot (Optional)</option>
           <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
           <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM - 4 PM)</option>
           <option value="Evening (4 PM - 7 PM)">Evening (4 PM - 7 PM)</option>
