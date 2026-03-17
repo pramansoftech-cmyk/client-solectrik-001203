@@ -206,7 +206,7 @@ window.addEventListener('load', () => {
       document.body.classList.add('modal-open'); // Hides floating buttons
       sessionStorage.setItem('quotePopupShown', 'true');
     }
-  }, 1000);
+  }, 25000);
 });
 
 function moveGalleryNext() {
