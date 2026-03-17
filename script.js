@@ -45,7 +45,7 @@ function calculateSavings() {
     return;
   }
 
-  // If user entered units, convert to estimated cost (assuming ~₹8 per unit avg) to calculate financial savings
+  // If user entered units, convert to estimated cost (assuming ~₹8 per unit avg)
   let monthlyCost = rawValue;
   if (currentSimType === 'units') {
     monthlyCost = rawValue * 8; 
@@ -67,14 +67,13 @@ function calculateSavings() {
     currentSavings *= inflationRate;
   }
 
-  // NEW Custom Logic for kW Prediction based strictly on Cost Range
+  // Custom Logic for kW Prediction
   let recommendedKw = 1;
   if (monthlyCost <= 1000) {
       recommendedKw = 1;
   } else if (monthlyCost <= 2000) {
       recommendedKw = 2;
   } else {
-      // Base 2kW for the first 2000, then +1kW for every additional 2000
       recommendedKw = 2 + Math.ceil((monthlyCost - 2000) / 2000);
   }
 
@@ -180,15 +179,15 @@ function initGallery() {
   }
 }
 
-// NEW: TRIGGER AUTO-POPUP ON LOAD
+// TRIGGER AUTO-POPUP ON LOAD
 window.addEventListener('load', () => {
   initGallery();
   
-  // Automatically open the Quote Modal 2 seconds after loading, only once per session
   setTimeout(() => {
     const autoQuote = document.getElementById('autoQuoteModal');
     if (autoQuote && !sessionStorage.getItem('quotePopupShown')) {
       autoQuote.classList.add('show');
+      document.body.classList.add('modal-open'); // Hides floating buttons
       sessionStorage.setItem('quotePopupShown', 'true');
     }
   }, 2000);
@@ -250,6 +249,7 @@ function openLightbox(element) {
   mediaClone.className = 'lightbox-content';
   mediaContainer.appendChild(mediaClone);
   projectLightbox.classList.add('show');
+  document.body.classList.add('modal-open'); // Hides floating buttons
   stopGalleryAutoPlay(); 
 }
 
@@ -257,6 +257,7 @@ function closeLightbox(event) {
   if (!projectLightbox) return;
   if (event.target === projectLightbox || event.target.id === 'lightboxMediaContainer' || event.target.classList.contains('close-lightbox')) {
     projectLightbox.classList.remove('show');
+    document.body.classList.remove('modal-open'); // Shows floating buttons
     mediaContainer.innerHTML = ''; 
     startGalleryAutoPlay(); 
   }
@@ -273,6 +274,7 @@ function openConsultationModal(event) {
   if(event) event.preventDefault();
   if(consultationModal) {
     consultationModal.classList.add('show');
+    document.body.classList.add('modal-open'); // Hides floating buttons
     document.getElementById('consultationForm').style.display = 'block';
     document.getElementById('consultSuccess').style.display = 'none';
     document.getElementById('consultationForm').reset();
@@ -282,23 +284,29 @@ function openConsultationModal(event) {
 function closeConsultationModal(event) {
   if (!event || event.target === consultationModal || event.target.classList.contains('close-lightbox') || event.target.innerText === 'Close Window') {
     consultationModal.classList.remove('show');
+    document.body.classList.remove('modal-open'); // Shows floating buttons
   }
 }
 
 function openSubsidyModal(event) {
   if(event) event.preventDefault();
-  if(subsidyModal) subsidyModal.classList.add('show');
+  if(subsidyModal) {
+    subsidyModal.classList.add('show');
+    document.body.classList.add('modal-open'); // Hides floating buttons
+  }
 }
 
 function closeSubsidyModal(event) {
   if (!event || event.target === subsidyModal || event.target.classList.contains('close-lightbox')) {
     subsidyModal.classList.remove('show');
+    document.body.classList.remove('modal-open'); // Shows floating buttons
   }
 }
 
 function closeAutoQuoteModal(event) {
   if (!event || event.target === autoQuoteModal || event.target.classList.contains('close-lightbox') || event.target.innerText === 'Close Window') {
     autoQuoteModal.classList.remove('show');
+    document.body.classList.remove('modal-open'); // Shows floating buttons
   }
 }
 

@@ -893,15 +893,32 @@ video.gallery-img { background-color: #000; }
   background-image: radial-gradient(circle at top right, rgba(60, 255, 136, 0.05), transparent 50%);
 }
 
-.consultation-form-wrapper h2 {
-  color: #3cff88;
-  margin-bottom: 5px;
-  text-align: center;
+.consultation-form-wrapper h2 { 
+  color: #3cff88; 
+  margin-bottom: 5px; 
+  text-align: center; 
+  padding: 0 35px; /* NEW: Adds padding so text never touches the X */
 }
 
-.consultation-form-wrapper .close-lightbox {
-  top: 15px;
-  right: 25px;
+.close-lightbox { 
+  position: absolute; 
+  top: 8px;  /* NEW: Pushed higher up */
+  right: 15px; /* NEW: Pushed closer to the edge */
+  color: #fff; 
+  font-size: 38px; /* NEW: Slightly smaller to fit perfectly */
+  font-weight: 300; 
+  cursor: pointer; 
+  transition: color 0.3s; 
+  z-index: 10000; 
+}
+
+/* ================= NEW: HIDE FLOATING BUTTONS ON MODAL ================= */
+body.modal-open .floating-wa,
+body.modal-open .floating-wash,
+body.modal-open .floating-sim {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .modal-input {
