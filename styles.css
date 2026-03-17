@@ -1083,6 +1083,12 @@ body.modal-open .floating-sim {
   height: 350px; /* Tall and clear on desktop */
   width: 100%;
 }
+/* ================= FIX FOR STICKY NAVBAR OVERLAP ================= */
+#simulator-section, 
+#washing-section, 
+#wash-form-target {
+  scroll-margin-top: 110px; /* Creates a perfect invisible buffer below the navbar */
+}
 /* ================= MOBILE RESPONSIVENESS ================= */
 @media screen and (max-width: 900px) {
   .quote-container, .form-grid { grid-template-columns: 1fr; }
