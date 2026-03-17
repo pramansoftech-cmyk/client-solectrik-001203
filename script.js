@@ -45,7 +45,7 @@ function calculateSavings() {
     return;
   }
 
-  // If user entered units, convert to estimated cost (assuming ~₹8 per unit avg)
+  // If user entered units, convert to estimated cost (assuming ~₹8 per unit avg) to calculate financial savings
   let monthlyCost = rawValue;
   if (currentSimType === 'units') {
     monthlyCost = rawValue * 8; 
@@ -59,6 +59,7 @@ function calculateSavings() {
   let currentSavings = baseSavings;
   let total30YearSavings = 0;
 
+  // Calculate 5-year graph data AND 30-year total savings
   for (let i = 0; i < 30; i++) {
     if (i < 5) {
         savingsData.push(Math.round(currentSavings));
@@ -67,19 +68,22 @@ function calculateSavings() {
     currentSavings *= inflationRate;
   }
 
-  // Custom Logic for kW Prediction
+  // Custom Logic for kW Prediction based strictly on Cost Range
   let recommendedKw = 1;
   if (monthlyCost <= 1000) {
       recommendedKw = 1;
   } else if (monthlyCost <= 2000) {
       recommendedKw = 2;
   } else {
+      // Base 2kW for the first 2000, then +1kW for every additional 2000
       recommendedKw = 2 + Math.ceil((monthlyCost - 2000) / 2000);
   }
 
+  // Show Result UI
   const resultCard = document.getElementById("resultCard");
   if (resultCard) resultCard.style.display = "block";
 
+  // Show Extended 30-year text and recommendation
   const extResults = document.getElementById("extended-results");
   if (extResults) {
     extResults.style.display = "block";
@@ -87,6 +91,7 @@ function calculateSavings() {
     document.getElementById("system-size-suggestion").innerHTML = `💡 Recommended System Size: ~${recommendedKw} kW`;
   }
 
+  // Draw Chart
   const chartCanvas = document.getElementById("savingsChart");
   if (!chartCanvas) return;
   const ctx = chartCanvas.getContext("2d");
@@ -112,6 +117,7 @@ function calculateSavings() {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false, // Allows chart to resize beautifully on mobile phones
       plugins: {
         legend: { labels: { color: "#ffffff" } },
         tooltip: { callbacks: { label: function(context) { return "₹ " + context.raw.toLocaleString(); } } }
@@ -183,6 +189,7 @@ function initGallery() {
 window.addEventListener('load', () => {
   initGallery();
   
+  // Automatically open the Quote Modal 1 second after loading, only once per session
   setTimeout(() => {
     const autoQuote = document.getElementById('autoQuoteModal');
     if (autoQuote && !sessionStorage.getItem('quotePopupShown')) {

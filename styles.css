@@ -424,6 +424,7 @@ nav a:hover, nav a.active {
   flex-wrap: wrap;
 }
 
+
 /* ================= ABOUT US PAGE (RESTORED) ================= */
 .about-hero {
   height: 60vh;
@@ -1076,6 +1077,12 @@ body.modal-open .floating-sim {
   50% { transform: translateY(-8px); }
 }
 
+/* ================= SIMULATOR CHART SIZING ================= */
+.chart-container {
+  position: relative;
+  height: 350px; /* Tall and clear on desktop */
+  width: 100%;
+}
 /* ================= MOBILE RESPONSIVENESS ================= */
 @media screen and (max-width: 900px) {
   .quote-container, .form-grid { grid-template-columns: 1fr; }
@@ -1099,6 +1106,10 @@ body.modal-open .floating-sim {
     padding: 30px 0;
     transition: left 0.4s ease;
     border-bottom: 1px solid rgba(60, 255, 136, 0.2);
+  }
+  /* Chart Sizing for Mobile */
+  .chart-container {
+    height: 280px; /* Forces the chart to stay tall and readable on phones! */
   }
   
   nav.nav-links.active { left: 0; } 

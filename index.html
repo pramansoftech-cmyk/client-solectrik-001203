@@ -151,9 +151,12 @@
           </button>
         </div>
 
-        <div class="result-card" id="resultCard">
+       <div class="result-card" id="resultCard">
           <h3>Projected 5-Year Savings</h3>
-          <canvas id="savingsChart"></canvas>
+          
+          <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+          </div>
           
           <div id="extended-results" style="display: none; margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(0,229,255,0.2);">
             <h4 style="color: #3cff88; margin-bottom: 10px; font-size: 18px;">30-Year Outlook</h4>
@@ -190,7 +193,7 @@
             <input type="hidden" name="_subject" value="New Solar Panel Washing Booking!">
             <input type="text" name="Client Name" placeholder="Your Full Name" required class="modal-input">
             <input type="tel" name="Mobile Number" placeholder="Your Mobile Number" required class="modal-input">
-            <input type="number" name="Existing System Size (kW)" placeholder="Existing System Size (e.g. 3 kW)" required class="modal-input" min="1" step="any">
+            <input type="number" name="Existing System Size (kW)" placeholder="Existing System Size (e.g. 3 kW) (Optional)"  class="modal-input" min="1" step="any">
             <textarea name="Address" placeholder="Your Full Address" rows="2" required class="modal-input" style="resize: none;"></textarea>
             <button type="submit" id="washBtn" class="btn-primary" style="width: 100%;">Schedule Cleaning</button>
           </form>
