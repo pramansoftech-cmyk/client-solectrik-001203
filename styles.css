@@ -1038,25 +1038,25 @@ body.modal-open .floating-sim {
   fill: white;
 }
 
-.floating-sim {
-  position: fixed;
+.floating-sim { 
+  position: fixed; 
   bottom: 165px; 
-  right: 30px;
-  background: linear-gradient(135deg, #ff9933, #e67e22);
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(255, 153, 51, 0.4);
-  z-index: 100000;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: floatBounce 3s infinite ease-in-out;
-  animation-delay: 1.5s;
+  right: 30px; 
+  background: linear-gradient(135deg, #ff9933, #e67e22); 
+  color: #fff; 
+  padding: 12px 20px; 
+  border-radius: 30px; 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  font-weight: 600; 
+  font-size: 14px; 
+  text-decoration: none; 
+  box-shadow: 0 4px 15px rgba(255, 153, 51, 0.4); 
+  z-index: 100000; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  animation: floatBounce 3s infinite ease-in-out; 
+  /* Removed the animation-delay from here! */
 }
 
 .floating-sim:hover {
