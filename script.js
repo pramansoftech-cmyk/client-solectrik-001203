@@ -190,7 +190,7 @@ window.addEventListener('load', () => {
       document.body.classList.add('modal-open'); // Hides floating buttons
       sessionStorage.setItem('quotePopupShown', 'true');
     }
-  }, 2000);
+  }, 1000);
 });
 
 function moveGalleryNext() {
