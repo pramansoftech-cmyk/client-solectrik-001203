@@ -15,34 +15,46 @@ function calculateSavings() {
   }
 
   const annualBill = bill * 12;
-
-  // 80% savings efficiency
-  const baseSavings = annualBill * 0.8;
-
-  // 5% yearly electricity inflation
-  const inflationRate = 1.05;
+  const baseSavings = annualBill * 0.8; // 80% savings efficiency
+  const inflationRate = 1.05; // 5% yearly electricity inflation
 
   let savingsData = [];
   let currentSavings = baseSavings;
+  let total30YearSavings = 0;
 
-  for (let i = 0; i < 5; i++) {
-    savingsData.push(Math.round(currentSavings));
+  // Calculate 5-year graph data AND 30-year total savings
+  for (let i = 0; i < 30; i++) {
+    if (i < 5) {
+        savingsData.push(Math.round(currentSavings));
+    }
+    total30YearSavings += currentSavings;
     currentSavings *= inflationRate;
   }
 
+  // Calculate System Size Recommendation
+  // Assuming avg rate is ₹8/unit, and 1kW produces ~120 units/month.
+  // Formula: (Bill / Rate) / Units Per kW -> rough estimate: Bill / 900
+  let recommendedKw = (bill / 900).toFixed(1);
+  if(recommendedKw < 1) recommendedKw = 1; // Minimum 1kW
+
+  // Show Result UI
   const resultCard = document.getElementById("resultCard");
-  if (resultCard) {
-    resultCard.style.display = "block";
+  if (resultCard) resultCard.style.display = "block";
+
+  // Show Extended 30-year text and recommendation
+  const extResults = document.getElementById("extended-results");
+  if (extResults) {
+    extResults.style.display = "block";
+    document.getElementById("lifetime-savings-text").innerHTML = `Over the 25-30 year lifespan of your solar panels, you are projected to save a massive <strong>₹ ${Math.round(total30YearSavings).toLocaleString()}</strong>!`;
+    document.getElementById("system-size-suggestion").innerHTML = `💡 Recommended System Size: ~${recommendedKw} kW`;
   }
 
+  // Draw Chart
   const chartCanvas = document.getElementById("savingsChart");
   if (!chartCanvas) return;
-  
   const ctx = chartCanvas.getContext("2d");
 
-  if (chart) {
-    chart.destroy();
-  }
+  if (chart) chart.destroy();
 
   chart = new Chart(ctx, {
     type: "line",
@@ -64,251 +76,27 @@ function calculateSavings() {
     options: {
       responsive: true,
       plugins: {
-        legend: {
-          labels: { color: "#ffffff" }
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return "₹ " + context.raw.toLocaleString();
-            }
-          }
-        }
+        legend: { labels: { color: "#ffffff" } },
+        tooltip: { callbacks: { label: function(context) { return "₹ " + context.raw.toLocaleString(); } } }
       },
       scales: {
-        x: {
-          ticks: { color: "#ffffff" },
-          grid: { color: "rgba(255,255,255,0.1)" }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: "#ffffff",
-            callback: function(value) {
-              return "₹ " + value.toLocaleString();
-            }
-          },
-          grid: { color: "rgba(255,255,255,0.1)" }
-        }
+        x: { ticks: { color: "#ffffff" }, grid: { color: "rgba(255,255,255,0.1)" } },
+        y: { beginAtZero: true, ticks: { color: "#ffffff", callback: function(value) { return "₹ " + value.toLocaleString(); } }, grid: { color: "rgba(255,255,255,0.1)" } }
       }
     }
   });
 }
 
-
 // ==========================================
-// 2. DYNAMIC GALLERY LOADER (IMAGES & VIDEOS)
-// ==========================================
-const track = document.getElementById('galleryTrack');
-
-// THE FIX: Explicit relative path using ./ and all lowercase
-const basePath = './project-images/'; 
-
-// Separate image and video extensions to test them properly
-const imageExts = ['jpg', 'png', 'jpeg', 'webp', 'avif']; 
-const videoExts = ['mp4', 'webm', 'ogg'];
-const allExts = [...imageExts, ...videoExts]; 
-
-const itemWidth = 320; 
-let autoPlayInterval;
-
-function loadGalleryMedia(index, extIndex = 0) {
-  if (!track) return; 
-
-  // Stop if we tested all extensions for this number and found nothing
-  if (extIndex >= allExts.length) {
-    console.log(`Gallery loaded successfully. Found ${index - 1} media files.`);
-    startGalleryAutoPlay(); 
-    return;
-  }
-
-  const ext = allExts[extIndex];
-  const src = `${basePath}${index}.${ext}`;
-  const isVideo = videoExts.includes(ext);
-
-  // Console log to help you debug exactly what the browser is looking for
-  console.log(`Checking path: ${src}`);
-
-  if (isVideo) {
-    // TEST FOR VIDEO
-    const vid = document.createElement('video');
-    vid.preload = 'metadata'; 
-    
-    vid.onloadeddata = () => {
-      vid.className = 'gallery-img'; 
-      vid.autoplay = true;
-      vid.muted = true; 
-      vid.loop = true;
-      vid.playsInline = true;
-      vid.onclick = function() { openLightbox(this); };
-      
-      track.appendChild(vid);
-      loadGalleryMedia(index + 1, 0); // Move to next number
-    };
-
-    vid.onerror = () => {
-      loadGalleryMedia(index, extIndex + 1); // Try next extension
-    };
-    
-    vid.src = src; 
-
-  } else {
-    // TEST FOR IMAGE
-    const img = new Image();
-    
-    img.onload = () => {
-      img.className = 'gallery-img'; 
-      img.alt = `Solar Project ${index}`;
-      img.onclick = function() { openLightbox(this); };
-      
-      track.appendChild(img);
-      loadGalleryMedia(index + 1, 0); // Move to next number
-    };
-
-    img.onerror = () => {
-      loadGalleryMedia(index, extIndex + 1); // Try next extension
-    };
-
-    img.src = src; 
-  }
-}
-
-// THE FIX: Bulletproof Startup Logic
-function initGallery() {
-  const trackExists = document.getElementById('galleryTrack');
-  if (trackExists) {
-    console.log("Starting gallery loader...");
-    loadGalleryMedia(1, 0);
-  }
-}
-
-// Run safely regardless of how fast the browser loads
-if (document.readyState === 'loading') {
-  document.addEventListener("DOMContentLoaded", initGallery);
-} else {
-  initGallery(); 
-}
-
-
-// ==========================================
-// 3. CONTINUOUS SLIDER MOVEMENT
-// ==========================================
-function moveGalleryNext() {
-  if (!track || track.children.length <= 1) return;
-  track.style.transition = 'transform 0.5s ease-in-out';
-  track.style.transform = `translateX(-${itemWidth}px)`;
-  
-  setTimeout(() => {
-    track.style.transition = 'none';
-    track.appendChild(track.firstElementChild); 
-    track.style.transform = 'translateX(0)';
-  }, 500); 
-}
-
-function moveGalleryPrev() {
-  if (!track || track.children.length <= 1) return;
-  track.style.transition = 'none';
-  track.prepend(track.lastElementChild); 
-  track.style.transform = `translateX(-${itemWidth}px)`; 
-  
-  void track.offsetWidth; 
-  
-  track.style.transition = 'transform 0.5s ease-in-out';
-  track.style.transform = 'translateX(0)';
-}
-
-function startGalleryAutoPlay() {
-  if (track && track.children.length > 2) { 
-    autoPlayInterval = setInterval(moveGalleryNext, 3000);
-  }
-}
-
-function stopGalleryAutoPlay() {
-  clearInterval(autoPlayInterval);
-}
-
-if (track) {
-  track.addEventListener('mouseenter', stopGalleryAutoPlay);
-  track.addEventListener('mouseleave', startGalleryAutoPlay);
-}
-
-document.querySelector('.next-arrow')?.addEventListener('click', () => {
-  stopGalleryAutoPlay();
-  moveGalleryNext();
-  startGalleryAutoPlay();
-});
-document.querySelector('.prev-arrow')?.addEventListener('click', () => {
-  stopGalleryAutoPlay();
-  moveGalleryPrev();
-  startGalleryAutoPlay();
-});
-
-
-// ==========================================
-// 4. LIGHTBOX (POP-UP) LOGIC
-// ==========================================
-const lightbox = document.getElementById('projectLightbox');
-const mediaContainer = document.getElementById('lightboxMediaContainer');
-
-function openLightbox(element) {
-  if (!lightbox || !mediaContainer) return;
-  
-  mediaContainer.innerHTML = ''; // Clear previous media
-  
-  let mediaClone;
-  
-  // Check if clicked element is a video or image
-  if (element.tagName === 'VIDEO') {
-    mediaClone = document.createElement('video');
-    mediaClone.src = element.src;
-    mediaClone.autoplay = true;
-    mediaClone.controls = true; // Give user play/pause/volume controls in full screen
-  } else {
-    mediaClone = document.createElement('img');
-    mediaClone.src = element.src;
-  }
-  
-  mediaClone.className = 'lightbox-content';
-  mediaContainer.appendChild(mediaClone);
-  
-  lightbox.classList.add('show');
-  stopGalleryAutoPlay(); 
-}
-
-function closeLightbox(event) {
-  if (!lightbox) return;
-  
-  // Close only if clicking the background wrapper or 'X' button
-  if (event.target === lightbox || event.target.id === 'lightboxMediaContainer' || event.target.classList.contains('close-lightbox')) {
-    lightbox.classList.remove('show');
-    mediaContainer.innerHTML = ''; // Stop video audio from playing in the background
-    startGalleryAutoPlay(); 
-  }
-}
-
-// ==========================================
-// 5. MOBILE HAMBURGER MENU LOGIC
-// ==========================================
-const mobileMenu = document.getElementById('mobile-menu');
-const navLinks = document.querySelector('.nav-links');
-
-if (mobileMenu && navLinks) {
-  mobileMenu.addEventListener('click', () => {
-    // Toggle the 'active' class to slide the menu in and out
-    navLinks.classList.toggle('active');
-  });
-}
-
-// ==========================================
-// 6. CONSULTATION POP-UP & EMAIL LOGIC
+// 2. MODAL LOGIC (CONSULTATION & SUBSIDY)
 // ==========================================
 const consultationModal = document.getElementById('consultationModal');
+const subsidyModal = document.getElementById('subsidyModal');
 
 function openConsultationModal(event) {
   if(event) event.preventDefault();
   if(consultationModal) {
     consultationModal.classList.add('show');
-    // Reset the modal view just in case they open it again after submitting
     document.getElementById('consultationForm').style.display = 'block';
     document.getElementById('consultSuccess').style.display = 'none';
     document.getElementById('consultationForm').reset();
@@ -316,37 +104,46 @@ function openConsultationModal(event) {
 }
 
 function closeConsultationModal(event) {
-  // Close if they click the background, the 'X', or the 'Close Window' button
   if (!event || event.target === consultationModal || event.target.classList.contains('close-lightbox') || event.target.innerText === 'Close Window') {
     consultationModal.classList.remove('show');
   }
 }
 
+// NEW: Subsidy Modal Functions
+function openSubsidyModal(event) {
+  if(event) event.preventDefault();
+  if(subsidyModal) subsidyModal.classList.add('show');
+}
+
+function closeSubsidyModal(event) {
+  if (!event || event.target === subsidyModal || event.target.classList.contains('close-lightbox')) {
+    subsidyModal.classList.remove('show');
+  }
+}
+
+// ==========================================
+// 3. EMAIL LOGIC
+// ==========================================
 async function sendToEmail(event) {
-  event.preventDefault(); // Stop the page from refreshing
+  event.preventDefault(); 
   
   const form = document.getElementById('consultationForm');
   const btn = document.getElementById('consultBtn');
   const successMsg = document.getElementById('consultSuccess');
   
-  // Change button text to show it's loading
   btn.disabled = true;
   btn.innerText = "Sending Booking...";
   
   const formData = new FormData(form);
   
-  // Send data to Formspree silently in the background
   try {
     const response = await fetch(form.action, {
       method: form.method,
       body: formData,
-      headers: {
-          'Accept': 'application/json'
-      }
+      headers: { 'Accept': 'application/json' }
     });
     
     if (response.ok) {
-      // SUCCESS! Hide the form inputs and show the Greeting Message
       form.style.display = "none";
       successMsg.style.display = "block";
     } else {
@@ -361,7 +158,18 @@ async function sendToEmail(event) {
     alert("Connection error. Please check your internet and try again.");
   }
   
-  // Reset button state
   btn.disabled = false;
   btn.innerText = "Confirm Booking";
+}
+
+// ==========================================
+// 4. MOBILE HAMBURGER MENU
+// ==========================================
+const mobileMenu = document.getElementById('mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+
+if (mobileMenu && navLinks) {
+  mobileMenu.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
 }

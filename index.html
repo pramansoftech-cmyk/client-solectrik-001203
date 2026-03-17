@@ -34,7 +34,6 @@
 </header>
 
 <section class="hero" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 40px; height: auto; min-height: 90vh; padding-top: 60px; padding-bottom: 60px;">
-  
   <div class="hero-content" style="flex: 1; min-width: 250px;">
     <h1>Powering Homes with <span>Intelligent Solar Systems</span></h1>
     <p>Advanced Solar Technology for Maximum Efficiency & Savings</p>
@@ -46,12 +45,10 @@
 
   <div class="hero-modi" style="flex: 1; min-width: 250px; display: flex; justify-content: center; align-items: center;">
     <div class="glass-card" style="background: rgba(0, 0, 0, 0.65); border: 1px solid rgba(255, 153, 51, 0.4); padding: 30px; border-radius: 20px; text-align: center; max-width: 450px; width: 100%; box-sizing: border-box;">
-      
       <div class="subsidy-badge" style="background: #ff9933; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;">PM SURYA GHAR: MUFT BIJLI YOJANA</div>
       
       <div style="position: relative; margin-bottom: 25px; margin-top: 10px;">
         <img src="assets/pm-modi.png" alt="Honorable PM Shri Narendra Modi" style="max-height: 250px; border-radius: 12px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));">
-        
         <div class="scheme-logo-text" style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 13px; width: 85%; box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);">
           Hon'ble Prime Minister <br><span style="color: #ff9933; font-size: 15px;">Shri Narendra Modi</span>
         </div>
@@ -67,10 +64,9 @@
         <li>✅ Enjoy up to <strong>300 Units</strong> free electricity</li>
       </ul>
       
-      <a href="quote.html" class="btn-primary" style="background: linear-gradient(135deg, #ff9933, #e67e22); color: #fff; width: 100%; box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);">Check Subsidy Eligibility Fast</a>
+      <a href="#" onclick="openSubsidyModal(event)" class="btn-primary" style="background: linear-gradient(135deg, #ff9933, #e67e22); color: #fff; width: 100%; box-shadow: 0 5px 15px rgba(255, 153, 51, 0.4);">Check Subsidy Breakdown</a>
     </div>
   </div>
-
 </section>
 
 <section class="stats">
@@ -103,19 +99,16 @@
           <h3>Solar Warranty</h3>
           <p>25-30 years of Warranty</p>
         </div>
-
         <div class="dash-card">
           <img src="assets/money%20saved.png" alt="Money Saved">
           <h3>Savings</h3>
           <p>Savings Upto 99% & ROI upto 35%</p>
         </div>
-
         <div class="dash-card">
           <img src="assets/easy%20finance.png" alt="Easy Finance">
           <h3>Easy Financing</h3>
           <p>Get easy finances to overcome financial obstacles in your solar journey</p>
         </div>
-
         <div class="dash-card battery">
           <img src="assets/smart%20maintanence.png" alt="Smart Maintenance">
           <h3>Smart Maintenance</h3>
@@ -142,7 +135,7 @@
       </div>
     </section>
 
-    <section class="simulator">
+    <section id="simulator-section" class="simulator">
       <div class="simulator-wrapper">
         <div class="sim-card">
           <h2>Solar Savings Simulator</h2>
@@ -156,13 +149,24 @@
         <div class="result-card" id="resultCard">
           <h3>Projected 5-Year Savings</h3>
           <canvas id="savingsChart"></canvas>
+          
+          <div id="extended-results" style="display: none; margin-top: 25px; padding-top: 25px; border-top: 1px solid rgba(0,229,255,0.2);">
+            <h4 style="color: #3cff88; margin-bottom: 10px; font-size: 18px;">30-Year Outlook</h4>
+            <p id="lifetime-savings-text" style="color: #b5dfff; font-size: 14px; margin-bottom: 20px; line-height: 1.5;"></p>
+            
+            <div style="background: rgba(0, 229, 255, 0.1); border: 1px dashed rgba(0, 229, 255, 0.4); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+              <p style="color: #fff; font-size: 13px; margin-bottom: 5px;">Based on your current monthly bill,</p>
+              <p id="system-size-suggestion" style="color: #00e5ff; font-size: 18px; font-weight: bold; margin: 0;"></p>
+            </div>
+            
+            <a href="quote.html" class="btn-primary" style="display: block; text-align: center; width: 100%;">Get a Custom Quote for this Size</a>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="washing-section" class="washing-service" style="padding: 40px 20px; background: rgba(5, 15, 25, 0.6); border-top: 1px solid rgba(60, 255, 136, 0.2); border-bottom: 1px solid rgba(60, 255, 136, 0.2);">
       <div class="washing-container">
-        
         <div class="washing-text">
           <h2 style="font-size: 32px; color: #ffffff; margin-bottom: 15px;">Maximize Your Solar Efficiency! ☀️🧼</h2>
           <p style="color: #b5dfff; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
@@ -177,23 +181,18 @@
 
         <div class="washing-form-box">
           <h3 style="color: #3cff88; margin-bottom: 20px; text-align: center;">Book a Wash Now</h3>
-          
           <form id="washingForm" onsubmit="sendWashingForm(event)" action="https://formspree.io/f/xdawwywv" method="POST">
             <input type="hidden" name="_subject" value="New Solar Panel Washing Booking!">
-            
             <input type="text" name="Client Name" placeholder="Your Full Name" required class="modal-input">
             <input type="tel" name="Mobile Number" placeholder="Your Mobile Number" required class="modal-input">
             <textarea name="Address" placeholder="Your Full Address" rows="2" required class="modal-input" style="resize: none;"></textarea>
-            
             <button type="submit" id="washBtn" class="btn-primary" style="width: 100%;">Schedule Cleaning</button>
           </form>
-
           <div id="washSuccess" style="display: none; text-align: center; margin-top: 15px;">
             <h4 style="color: #3cff88; font-size: 18px;">✅ Booking Received!</h4>
             <p style="color: #b5dfff; font-size: 14px; margin-top: 5px;">Our team will call you shortly to confirm your time slot.</p>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -202,21 +201,15 @@
       <div class="project-grid">
         <div class="project-card">
           <img src="assets/residential%20solar.png" alt="Residential Solar">
-          <div class="card-overlay">
-            <h3>Residential Solar</h3>
-          </div>
+          <div class="card-overlay"><h3>Residential Solar</h3></div>
         </div>
         <div class="project-card">
           <img src="assets/commercial%20solar.png" alt="Commercial Solar">
-          <div class="card-overlay">
-            <h3>Commercial Solar</h3>
-          </div>
+          <div class="card-overlay"><h3>Commercial Solar</h3></div>
         </div>
         <div class="project-card">
           <img src="assets/industrial%20solar.png" alt="Industrial Solar">
-          <div class="card-overlay">
-            <h3>Industrial Solar</h3>
-          </div>
+          <div class="card-overlay"><h3>Industrial Solar</h3></div>
         </div>
       </div>
     </section>
@@ -230,6 +223,36 @@
   </div>
 </section>
 
+<div id="subsidyModal" class="lightbox" onclick="closeSubsidyModal(event)">
+  <div class="lightbox-content consultation-form-wrapper" style="max-width: 500px; padding: 40px 30px;">
+    <span class="close-lightbox" onclick="closeSubsidyModal(event)">×</span>
+    <h2 style="color: #ff9933; margin-bottom: 5px;">Subsidy Breakdown</h2>
+    <p style="text-align: center; color: #b5dfff; margin-bottom: 25px; font-size: 15px;">PM Surya Ghar Muft Bijli Yojana</p>
+
+    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255, 153, 51, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+        <ul style="list-style: none; padding: 0; color: #fff; font-size: 16px; line-height: 2;">
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
+                <span>Up to 1 kW System</span> <strong style="color: #3cff88;">₹ 30,000</strong>
+            </li>
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
+                <span>Up to 2 kW System</span> <strong style="color: #3cff88;">₹ 60,000</strong>
+            </li>
+            <li style="display: flex; justify-content: space-between;">
+                <span>Up to 3 kW & Above System </span> <strong style="color: #3cff88;">₹ 78,000</strong>
+            </li>
+        </ul>
+    </div>
+
+    <div style="background: rgba(255, 60, 60, 0.1); border-left: 3px solid #ff3c3c; padding: 12px 15px; margin-bottom: 25px; border-radius: 4px;">
+        <p style="color: #ffe6e6; font-size: 13px; line-height: 1.5; margin: 0;">
+            <strong>⚠️ Important Note:</strong> Subsidies are exclusively available for <strong>Residential Homes</strong>. Commercial, Industrial, and independent business systems are not eligible.
+        </p>
+    </div>
+
+    <a href="quote.html" class="btn-primary" style="display: block; width: 100%; text-align: center; background: linear-gradient(135deg, #ff9933, #e67e22);">Get Your Free Quote Now</a>
+  </div>
+</div>
+
 <div id="consultationModal" class="lightbox" onclick="closeConsultationModal(event)">
   <div class="lightbox-content consultation-form-wrapper">
     <span class="close-lightbox" onclick="closeConsultationModal(event)">×</span>
@@ -237,29 +260,21 @@
     <p style="text-align: center; color: #b5dfff; margin-bottom: 20px; font-size: 14px;">Take the first step towards clean energy and massive savings.</p>
     
     <form id="consultationForm" onsubmit="sendToEmail(event)" action="https://formspree.io/f/xnjggjnl" method="POST">
-      
       <input type="hidden" name="_subject" value="New Consultation Booking - Solectrik Energy">
-      
       <input type="text" name="Client Name" id="userName" placeholder="Full Name" required class="modal-input">
-      
       <div style="display: flex; gap: 10px;">
         <input type="tel" name="Mobile Number" id="userMobile" placeholder="Mobile Number" required class="modal-input">
-        
-      </div>
-      
+              </div>
       <div style="display: flex; gap: 10px;">
-        <input type="text" name="Requested Date" id="userDate" placeholder="Select Date" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" class="modal-input">
-        
+        <input type="text" name="Requested Date" id="userDate" placeholder="Date (Optional)" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" class="modal-input">
         <select name="Time Slot" id="userTime" class="modal-input">
-          <option value="" disabled selected>Select Time Slot (Optional)</option>
+          <option value="" disabled selected>Time Slot (Optional)</option>
           <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
           <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM - 4 PM)</option>
           <option value="Evening (4 PM - 7 PM)">Evening (4 PM - 7 PM)</option>
         </select>
       </div>
-
       <textarea name="Address" id="userAddress" placeholder="Full Address" rows="3" required class="modal-input"></textarea>
-      
       <button type="submit" id="consultBtn" class="btn-primary" style="width: 100%; margin-top: 10px;">Confirm Booking</button>
     </form>
 
@@ -270,25 +285,21 @@
       </p>
       <button onclick="closeConsultationModal(event)" class="btn-outline">Close Window</button>
     </div>
-
   </div>
 </div>
 
 <footer class="main-footer">
   <div class="footer-container">
-    
     <div class="footer-left">
       <div class="logo footer-logo">
         <img src="assets/logo.png" alt="Solectrik Logo" style="width: 100%; height: 150px; object-fit: contain; border-radius: 8px; border:0;">
       </div>
     </div>
-
     <div class="footer-center" style="display: flex; flex-direction: column; align-items: center;">
       <div style="display: flex; flex-direction: column; gap: 10px; align-items: center; margin-bottom: 20px;">
         <a href="quote.html" class="btn-primary" style="display:inline-block; text-decoration:none;">Get a Free Quote</a>
         <p> Contact Us on: 7774046466 | support@solectrikenergy.in</p>
       </div>
-
       <h3>Follow Us</h3>
       <div class="social-icons" style="display:flex; gap:15px; margin-top:15px;">
         <a href="https://www.facebook.com/share/14UQG4JxHS2/" aria-label="Facebook">
@@ -302,24 +313,23 @@
         </a>
       </div>
     </div>
-
     <div class="footer-right">
       <h3>Our Location</h3>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.688361450082!2d79.06720257504901!3d21.2045353804892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4576cf4c19aed%3A0x656e9c81407a2f63!2sSolectrik%20Energy!5e0!3m2!1sen!2sin!4v1773389867859!5m2!1sen!2sin" 
-        width="100%" 
-        height="150" 
-        style="border:0; border-radius: 8px;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.688361450082!2d79.06720257504901!3d21.2045353804892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4576cf4c19aed%3A0x656e9c81407a2f63!2sSolectrik%20Energy!5e0!3m2!1sen!2sin!4v1773389867859!5m2!1sen!2sin" width="100%" height="150" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
-  
   <div class="footer-bottom">
     <p class="copyright">© 2026 Solectrik Energy. All Rights Reserved.</p>
   </div>
 </footer>
+
+<a href="index.html#simulator-section" class="floating-sim">
+  Calculate Savings
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+    <path d="M7 7h10v3H7zm0 5h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/>
+  </svg>
+</a>
 
 <a href="index.html#washing-section" class="floating-wash">
   Book Solar Wash
@@ -336,7 +346,6 @@
 </a>
 
 <script src="script.js"></script>
-
 <script>
   async function sendWashingForm(event) {
     event.preventDefault();
