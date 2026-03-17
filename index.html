@@ -97,7 +97,7 @@
         <div class="dash-card">
           <img src="assets/energy%20generated.png" alt="Energy Generated">
           <h3>Solar Warranty</h3>
-          <p>25-30 years of Warranty</p>
+          <p>25-30 years of Warranty with agreement</p>
         </div>
         <div class="dash-card">
           <img src="assets/money%20saved.png" alt="Money Saved">
@@ -139,8 +139,13 @@
       <div class="simulator-wrapper">
         <div class="sim-card">
           <h2>Solar Savings Simulator</h2>
-          <label>Monthly Electricity Bill (₹)</label>
-          <input type="number" id="billInput" placeholder="Enter your monthly bill">
+          
+          <div class="sim-toggle" style="display: flex; background: #010d17; border-radius: 8px; border: 1px solid rgba(0,229,255,0.25); overflow: hidden; margin-bottom: 15px; margin-top: 15px;">
+            <div id="btnCost" onclick="setSimType('cost')" style="flex:1; padding: 12px; text-align: center; cursor: pointer; background: rgba(0,229,255,0.2); color: #00e5ff; font-weight: 600; font-size: 14px;">Monthly Bill</div>
+            <div id="btnUnits" onclick="setSimType('units')" style="flex:1; padding: 12px; text-align: center; cursor: pointer; color: #fff; font-size: 14px;">Monthly Units</div>
+          </div>
+
+          <input type="number" id="billInput" placeholder="Enter your monthly bill (₹)">
           <button class="btn-primary" onclick="calculateSavings()">
             Estimate Savings
           </button>
@@ -155,7 +160,7 @@
             <p id="lifetime-savings-text" style="color: #b5dfff; font-size: 14px; margin-bottom: 20px; line-height: 1.5;"></p>
             
             <div style="background: rgba(0, 229, 255, 0.1); border: 1px dashed rgba(0, 229, 255, 0.4); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-              <p style="color: #fff; font-size: 13px; margin-bottom: 5px;">Based on your current monthly bill,</p>
+              <p style="color: #fff; font-size: 13px; margin-bottom: 5px;">Based on your inputs, we recommend a</p>
               <p id="system-size-suggestion" style="color: #00e5ff; font-size: 18px; font-weight: bold; margin: 0;"></p>
             </div>
             
@@ -185,6 +190,7 @@
             <input type="hidden" name="_subject" value="New Solar Panel Washing Booking!">
             <input type="text" name="Client Name" placeholder="Your Full Name" required class="modal-input">
             <input type="tel" name="Mobile Number" placeholder="Your Mobile Number" required class="modal-input">
+            <input type="number" name="Existing System Size (kW)" placeholder="Existing System Size (e.g. 3 kW)" required class="modal-input" min="1" step="any">
             <textarea name="Address" placeholder="Your Full Address" rows="2" required class="modal-input" style="resize: none;"></textarea>
             <button type="submit" id="washBtn" class="btn-primary" style="width: 100%;">Schedule Cleaning</button>
           </form>
@@ -238,7 +244,7 @@
                 <span>Up to 2 kW System</span> <strong style="color: #3cff88;">₹ 60,000</strong>
             </li>
             <li style="display: flex; justify-content: space-between;">
-                <span>Up to 3 kW & Above System </span> <strong style="color: #3cff88;">₹ 78,000</strong>
+                <span>Up to 3 kW System</span> <strong style="color: #3cff88;">₹ 78,000</strong>
             </li>
         </ul>
     </div>
@@ -264,7 +270,8 @@
       <input type="text" name="Client Name" id="userName" placeholder="Full Name" required class="modal-input">
       <div style="display: flex; gap: 10px;">
         <input type="tel" name="Mobile Number" id="userMobile" placeholder="Mobile Number" required class="modal-input">
-              </div>
+        <input type="email" name="email" id="userEmail" placeholder="Email (Optional)" class="modal-input">
+      </div>
       <div style="display: flex; gap: 10px;">
         <input type="text" name="Requested Date" id="userDate" placeholder="Date (Optional)" onfocus="(this.type='date')" onblur="(this.value == '' ? this.type='text' : this.type='date')" class="modal-input">
         <select name="Time Slot" id="userTime" class="modal-input">
@@ -284,6 +291,39 @@
         Thank you for booking your consultancy with Solectrik Energy! You have taken a fantastic first step towards saving money and protecting the environment. 🌍⚡<br><br>Our team is reviewing your details and will contact you shortly to confirm your time slot.
       </p>
       <button onclick="closeConsultationModal(event)" class="btn-outline">Close Window</button>
+    </div>
+  </div>
+</div>
+
+<div id="autoQuoteModal" class="lightbox" onclick="closeAutoQuoteModal(event)">
+  <div class="lightbox-content consultation-form-wrapper" style="border-color: #00e5ff; background-image: radial-gradient(circle at top right, rgba(0, 229, 255, 0.05), transparent 50%);">
+    <span class="close-lightbox" onclick="closeAutoQuoteModal(event)">×</span>
+    <h2 style="color: #00e5ff;">Get a Free Solar Quote</h2>
+    <p style="text-align: center; color: #b5dfff; margin-bottom: 20px; font-size: 14px;">Smart energy starts with the right plan. Let us design it for you!</p>
+    
+    <form id="autoQuoteForm" onsubmit="sendAutoQuoteForm(event)" action="https://formspree.io/f/mqeyyeav" method="POST">
+      <input type="hidden" name="_subject" value="New Auto-Quote Request - Home Page">
+      
+      <input type="text" name="name" placeholder="Full Name" required class="modal-input">
+      <input type="tel" name="phone" placeholder="Phone Number" required class="modal-input">
+      <input type="text" name="location" placeholder="City / Location" required class="modal-input">
+      
+      <select name="service_type" class="modal-input">
+        <option value="" disabled selected>Select Service (Optional)</option>
+        <option value="Residential">Residential</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Industrial">Industrial</option>
+        <option value="Housing Society">Housing Society</option>
+        <option value="Maintenance">Maintenance</option>
+      </select>
+
+      <button type="submit" id="autoQuoteBtn" class="btn-primary" style="width: 100%; margin-top: 10px; background: linear-gradient(90deg, #457ef1, #00bcd4);">Get Free Quote</button>
+    </form>
+
+    <div id="autoQuoteSuccess" style="display: none; text-align: center; padding: 20px 0;">
+      <h3 style="color: #00e5ff; margin-bottom: 15px; font-size: 24px;">Request Received! 🎉</h3>
+      <p style="color: #b5dfff; line-height: 1.6; margin-bottom: 20px;">Our technical team is reviewing your profile and will contact you shortly with a customized plan.</p>
+      <button onclick="closeAutoQuoteModal(event)" class="btn-outline" style="border-color: #00e5ff; color: #00e5ff;">Close Window</button>
     </div>
   </div>
 </div>
@@ -353,29 +393,29 @@
     const btn = document.getElementById("washBtn");
     const successMsg = document.getElementById("washSuccess");
     
-    btn.disabled = true;
-    btn.innerText = "Sending Booking...";
+    btn.disabled = true; btn.innerText = "Sending Booking...";
     
     try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      
-      if (response.ok) {
-        form.style.display = "none";
-        successMsg.style.display = "block";
-      } else {
-        alert("Oops! Something went wrong submitting your form.");
-        btn.disabled = false;
-        btn.innerText = "Schedule Cleaning";
-      }
-    } catch (error) {
-      alert("Connection error. Please check your internet.");
-      btn.disabled = false;
-      btn.innerText = "Schedule Cleaning";
-    }
+      const response = await fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' }});
+      if (response.ok) { form.style.display = "none"; successMsg.style.display = "block"; } 
+      else { alert("Oops! Something went wrong."); btn.disabled = false; btn.innerText = "Schedule Cleaning"; }
+    } catch (error) { alert("Connection error."); btn.disabled = false; btn.innerText = "Schedule Cleaning"; }
+  }
+
+  // Handle the automatic Quote form submission silently
+  async function sendAutoQuoteForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const btn = document.getElementById("autoQuoteBtn");
+    const successMsg = document.getElementById("autoQuoteSuccess");
+    
+    btn.disabled = true; btn.innerText = "Sending Request...";
+    
+    try {
+      const response = await fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' }});
+      if (response.ok) { form.style.display = "none"; successMsg.style.display = "block"; } 
+      else { alert("Oops! Something went wrong."); btn.disabled = false; btn.innerText = "Get Free Quote"; }
+    } catch (error) { alert("Connection error."); btn.disabled = false; btn.innerText = "Get Free Quote"; }
   }
 </script>
 

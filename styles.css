@@ -510,6 +510,12 @@ nav a:hover, nav a.active {
   filter: drop-shadow(0 25px 40px rgba(0,0,0,0.4));
 }
 
+/* About Us Image Mobile Adjustment */
+  .about-cta {
+    height: 250px;
+    margin-top: 20px;
+  }
+
 /* ================= PROJECTS & GALLERY PAGE (RESTORED) ================= */
 .projects-hero {
   height: 60vh;
@@ -678,6 +684,25 @@ video.gallery-img { background-color: #000; }
 
 .close-lightbox:hover { color: #3cff88; }
 
+/* ================= SOLAR ROADMAP TIMELINE ================= */
+.roadmap-section { padding: 80px 20px; background: transparent; position: relative; overflow: hidden; }
+.roadmap-container { position: relative; max-width: 1000px; margin: 0 auto; padding: 40px 0; }
+.roadmap-container::after { content: ''; position: absolute; width: 4px; background: linear-gradient(to bottom, #00e5ff, #3cff88, #ff9933); top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); }
+.roadmap-step { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; box-sizing: border-box; margin-bottom: 40px; }
+.roadmap-step.left { left: 0; }
+.roadmap-step.right { left: 50%; }
+.roadmap-icon { position: absolute; width: 40px; height: 40px; right: -20px; background: #010d17; border: 3px solid #3cff88; top: 20px; border-radius: 50%; z-index: 1; display: flex; align-items: center; justify-content: center; color: #3cff88; font-weight: bold; font-size: 18px; box-shadow: 0 0 15px rgba(60, 255, 136, 0.4); }
+.roadmap-step.right .roadmap-icon { left: -20px; }
+.roadmap-content { padding: 25px; background: rgba(255, 255, 255, 0.05); border-radius: 16px; border: 1px solid rgba(0, 229, 255, 0.2); backdrop-filter: blur(10px); transition: 0.3s ease; }
+.roadmap-content:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2); border-color: #3cff88; }
+.roadmap-content h3 { margin-bottom: 10px; font-size: 22px; }
+.roadmap-content p { color: #b5dfff; font-size: 14px; line-height: 1.6; }
+
+/* Solar Roadmap Mobile Adjustments */
+  .roadmap-container::after { left: 31px; }
+  .roadmap-step { width: 100%; padding-left: 80px; padding-right: 20px; }
+  .roadmap-step.left, .roadmap-step.right { left: 0; }
+  .roadmap-icon, .roadmap-step.right .roadmap-icon { left: 11px; }
 
 /* ================= QUOTE & SIMULATOR PAGE ================= */
 .page-hero {

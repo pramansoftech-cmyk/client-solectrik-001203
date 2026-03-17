@@ -2,19 +2,56 @@
 // 1. SAVINGS CALCULATOR & CHART LOGIC
 // ==========================================
 let chart;
+let currentSimType = 'cost';
+
+// Toggle the Simulator between Bill Cost and Units
+function setSimType(type) {
+  currentSimType = type;
+  const btnCost = document.getElementById('btnCost');
+  const btnUnits = document.getElementById('btnUnits');
+  const input = document.getElementById('billInput');
+  
+  if (type === 'cost') {
+      btnCost.style.background = 'rgba(0,229,255,0.2)';
+      btnCost.style.color = '#00e5ff';
+      btnCost.style.fontWeight = '600';
+      
+      btnUnits.style.background = 'transparent';
+      btnUnits.style.color = '#fff';
+      btnUnits.style.fontWeight = 'normal';
+      
+      input.placeholder = 'Enter your monthly bill (₹)';
+  } else {
+      btnUnits.style.background = 'rgba(0,229,255,0.2)';
+      btnUnits.style.color = '#00e5ff';
+      btnUnits.style.fontWeight = '600';
+      
+      btnCost.style.background = 'transparent';
+      btnCost.style.color = '#fff';
+      btnCost.style.fontWeight = 'normal';
+      
+      input.placeholder = 'Enter your monthly units (kWh)';
+  }
+}
 
 function calculateSavings() {
   const billInput = document.getElementById("billInput");
   if (!billInput) return;
 
-  const bill = parseFloat(billInput.value);
+  const rawValue = parseFloat(billInput.value);
 
-  if (!bill || bill <= 0) {
-    alert("Please enter a valid monthly bill");
+  if (!rawValue || rawValue <= 0) {
+    alert("Please enter a valid number");
     return;
   }
 
-  const annualBill = bill * 12;
+  // If user entered units, convert to estimated cost (assuming ~₹8 per unit avg) to calculate financial savings
+  let monthlyCost = rawValue;
+  if (currentSimType === 'units') {
+    monthlyCost = rawValue * 8; 
+  }
+
+  const annualBill = monthlyCost * 12;
   const baseSavings = annualBill * 0.8; 
   const inflationRate = 1.05; 
 
@@ -30,8 +67,16 @@ function calculateSavings() {
     currentSavings *= inflationRate;
   }
 
-  let recommendedKw = (bill / 900).toFixed(1);
-  if(recommendedKw < 1) recommendedKw = 1; 
+  // NEW Custom Logic for kW Prediction based strictly on Cost Range
+  let recommendedKw = 1;
+  if (monthlyCost <= 1000) {
+      recommendedKw = 1;
+  } else if (monthlyCost <= 2000) {
+      recommendedKw = 2;
+  } else {
+      // Base 2kW for the first 2000, then +1kW for every additional 2000
+      recommendedKw = 2 + Math.ceil((monthlyCost - 2000) / 2000);
+  }
 
   const resultCard = document.getElementById("resultCard");
   if (resultCard) resultCard.style.display = "block";
@@ -81,7 +126,7 @@ function calculateSavings() {
 }
 
 // ==========================================
-// 2. DYNAMIC GALLERY LOADER & SLIDER (PROJECTS PAGE)
+// 2. DYNAMIC GALLERY LOADER & SLIDER
 // ==========================================
 const track = document.getElementById('galleryTrack');
 const basePath = './project-images/'; 
@@ -134,8 +179,20 @@ function initGallery() {
     loadGalleryMedia(1, 0);
   }
 }
-if (document.readyState === 'loading') { document.addEventListener("DOMContentLoaded", initGallery); } 
-else { initGallery(); }
+
+// NEW: TRIGGER AUTO-POPUP ON LOAD
+window.addEventListener('load', () => {
+  initGallery();
+  
+  // Automatically open the Quote Modal 2 seconds after loading, only once per session
+  setTimeout(() => {
+    const autoQuote = document.getElementById('autoQuoteModal');
+    if (autoQuote && !sessionStorage.getItem('quotePopupShown')) {
+      autoQuote.classList.add('show');
+      sessionStorage.setItem('quotePopupShown', 'true');
+    }
+  }, 2000);
+});
 
 function moveGalleryNext() {
   if (!track || track.children.length <= 1) return;
@@ -206,10 +263,11 @@ function closeLightbox(event) {
 }
 
 // ==========================================
-// 4. CONSULTATION & SUBSIDY MODALS
+// 4. MODALS (CONSULTATION, SUBSIDY, AUTO-QUOTE)
 // ==========================================
 const consultationModal = document.getElementById('consultationModal');
 const subsidyModal = document.getElementById('subsidyModal');
+const autoQuoteModal = document.getElementById('autoQuoteModal');
 
 function openConsultationModal(event) {
   if(event) event.preventDefault();
@@ -235,6 +293,12 @@ function openSubsidyModal(event) {
 function closeSubsidyModal(event) {
   if (!event || event.target === subsidyModal || event.target.classList.contains('close-lightbox')) {
     subsidyModal.classList.remove('show');
+  }
+}
+
+function closeAutoQuoteModal(event) {
+  if (!event || event.target === autoQuoteModal || event.target.classList.contains('close-lightbox') || event.target.innerText === 'Close Window') {
+    autoQuoteModal.classList.remove('show');
   }
 }
 
