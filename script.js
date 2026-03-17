@@ -45,7 +45,7 @@ function calculateSavings() {
     return;
   }
 
-  // If user entered units, convert to estimated cost (assuming ~₹8 per unit avg) to calculate financial savings
+  // Calculate estimated cost if they entered units (assuming ~₹8 per unit avg) for the financial chart
   let monthlyCost = rawValue;
   if (currentSimType === 'units') {
     monthlyCost = rawValue * 8; 
@@ -68,15 +68,24 @@ function calculateSavings() {
     currentSavings *= inflationRate;
   }
 
-  // Custom Logic for kW Prediction based strictly on Cost Range
+  // ====================================================
+  // NEW: Custom Logic for kW Prediction (Cost vs Units)
+  // ====================================================
   let recommendedKw = 1;
-  if (monthlyCost <= 1000) {
-      recommendedKw = 1;
-  } else if (monthlyCost <= 2000) {
-      recommendedKw = 2;
+  
+  if (currentSimType === 'units') {
+      // If using Units: 1kW for every 150 units
+      recommendedKw = Math.ceil(rawValue / 150);
+      if (recommendedKw < 1) recommendedKw = 1; // Minimum 1kW
   } else {
-      // Base 2kW for the first 2000, then +1kW for every additional 2000
-      recommendedKw = 2 + Math.ceil((monthlyCost - 2000) / 2000);
+      // If using Cost: 1kW up to 1000, 2kW up to 2000, etc.
+      if (monthlyCost <= 1000) {
+          recommendedKw = 1;
+      } else if (monthlyCost <= 2000) {
+          recommendedKw = 2;
+      } else {
+          recommendedKw = 2 + Math.ceil((monthlyCost - 2000) / 2000);
+      }
   }
 
   // Show Result UI
