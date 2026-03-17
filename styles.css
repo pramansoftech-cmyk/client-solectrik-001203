@@ -25,7 +25,7 @@ body {
   font-size: 15px;
   color: #ffe6e6;
   
-  /* NEW: Forces mobile browsers to render the animation smoothly */
+  /* Forces mobile browsers to render the animation smoothly */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: box-shadow;
@@ -48,7 +48,7 @@ body {
   border-radius: 50%;
   box-shadow: 0 0 10px #ff3c3c;
   
-  /* NEW: Hardware acceleration for the dot */
+  /* Hardware acceleration for the dot */
   will-change: opacity, transform;
   
   animation: blink 1s infinite alternate;
@@ -76,16 +76,6 @@ body {
   100% { box-shadow: 0 0 0 0 rgba(255, 60, 60, 0); }
 }
 
-/* Urgency Alert Mobile Layout Fixes */
-  .urgency-alert {
-    align-items: flex-start; /* Keeps the dot at the top */
-    text-align: left; /* Overrides the center alignment on mobile */
-    font-size: 14px;
-    padding: 15px;
-  }
-  .pulse-dot {
-    margin-top: 4px; /* Aligns the dot perfectly with the first line of text */
-  }
 /* ================= NAVBAR & LOGO ================= */
 .navbar {
   display: flex;
@@ -114,6 +104,11 @@ body {
 
 .logo span {
   color: #3cff88;
+}
+
+/* Fix logo link styling so it doesn't get underlined */
+a.logo {
+  text-decoration: none;
 }
 
 nav.nav-links {
@@ -247,7 +242,7 @@ nav a:hover, nav a.active {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255, 153, 51, 0.08)); /* Saffron hint for Govt scheme */
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255, 153, 51, 0.08)); 
   border: 1px solid rgba(255, 153, 51, 0.3);
   padding: 40px;
   gap: 40px;
@@ -261,7 +256,7 @@ nav a:hover, nav a.active {
 
 .subsidy-badge {
   display: inline-block;
-  background: #ff9933; /* Saffron color */
+  background: #ff9933; 
   color: #fff;
   padding: 6px 14px;
   border-radius: 20px;
@@ -333,7 +328,6 @@ nav a:hover, nav a.active {
   color: #ff9933;
   font-size: 14px;
 }
-
 
 /* Video Section */
 .extended {
@@ -912,13 +906,111 @@ video.gallery-img { background-color: #000; }
   box-shadow: 0 0 10px rgba(60, 255, 136, 0.1);
 }
 
-/* Fix calendar icon color for date picker */
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
   cursor: pointer;
 }
 
-/* ================= MOBILE RESPONSIVENESS ================= */
+/* ================= FLOATING WHATSAPP BUTTON ================= */
+.floating-wa {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25D366; 
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: 10000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floating-wa:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+}
+
+.floating-wa svg {
+  width: 35px;
+  height: 35px;
+  fill: white;
+}
+
+/* ================= FLOATING SOLAR WASH BUTTON ================= */
+.floating-wash {
+  position: fixed;
+  bottom: 105px; 
+  right: 30px;
+  background: linear-gradient(135deg, #00e5ff, #0077ff);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+  z-index: 10000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: floatBounce 3s infinite ease-in-out;
+}
+
+.floating-wash:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.7);
+  animation-play-state: paused;
+}
+
+.floating-wash svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ================= SOLAR WASHING SECTION ================= */
+.washing-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  padding: 40px;
+  border-radius: 16px;
+}
+
+.washing-text {
+  flex: 1;
+  min-width: 300px;
+  text-align: left;
+}
+
+.washing-form-box {
+  flex: 0.8;
+  min-width: 300px;
+  background: rgba(1, 13, 23, 0.8);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(60, 255, 136, 0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  width: 100%;
+}
+
+
+/* ================= ALL MOBILE RESPONSIVENESS ================= */
 @media screen and (max-width: 900px) {
   .quote-container, .form-grid { grid-template-columns: 1fr; }
   .about-hero, .projects-hero, .hero { padding: 0 40px; }
@@ -933,7 +1025,7 @@ video.gallery-img { background-color: #000; }
   nav.nav-links {
     position: absolute;
     top: 100%;
-    left: -100%; /* Hidden offscreen by default */
+    left: -100%; 
     flex-direction: column;
     background: rgba(5, 15, 25, 0.98);
     width: 100%;
@@ -943,7 +1035,7 @@ video.gallery-img { background-color: #000; }
     border-bottom: 1px solid rgba(60, 255, 136, 0.2);
   }
   
-  nav.nav-links.active { left: 0; } /* Slides in when active */
+  nav.nav-links.active { left: 0; } 
   nav.nav-links a { margin: 15px 0; display: block; font-size: 18px; }
   nav.nav-links .btn-primary { width: 80%; margin: 15px auto; }
   
@@ -983,7 +1075,7 @@ video.gallery-img { background-color: #000; }
   }
   
   .subsidy-list li {
-    text-align: left; /* Keep list readable */
+    text-align: left; 
   }
 
   .scheme-logo-text {
@@ -993,50 +1085,25 @@ video.gallery-img { background-color: #000; }
     width: 90%;
   }
 
+  /* Urgency Alert Mobile Fixes */
+  .urgency-alert {
+    align-items: flex-start; 
+    text-align: left; 
+    font-size: 14px;
+    padding: 15px;
+  }
+  .pulse-dot {
+    margin-top: 4px; 
+  }
+
   /* Adjust Cards and Galleries for Small Screens */
   .gallery-img { width: 260px; height: 190px; }
   .quote-form { padding: 25px; }
   .footer-container { flex-direction: column; text-align: center; gap: 30px;}
   .footer-right iframe { max-width: 100%; margin: auto; }
   .consultation-form-wrapper { padding: 25px; }
-}
 
-/* ================= FLOATING WHATSAPP BUTTON ================= */
-.floating-wa {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #25D366; /* Official WhatsApp Green */
-  color: white;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-  z-index: 10000;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.floating-wa:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
-}
-
-.floating-wa svg {
-  width: 35px;
-  height: 35px;
-  fill: white;
-}
-
-/* Fix logo link styling so it doesn't get underlined */
-a.logo {
-  text-decoration: none;
-}
-
-/* Scale down the WhatsApp button slightly on mobile */
-@media screen and (max-width: 768px) {
+  /* Floating Buttons Mobile Adjustment */
   .floating-wa {
     bottom: 20px;
     right: 20px;
@@ -1047,92 +1114,14 @@ a.logo {
     width: 30px;
     height: 30px;
   }
-}
-
-
-/* ================= FLOATING SOLAR WASH BUTTON ================= */
-.floating-wash {
-  position: fixed;
-  bottom: 105px; /* Sits right above the WhatsApp button */
-  right: 30px;
-  background: linear-gradient(135deg, #00e5ff, #0077ff);
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
-  z-index: 10000;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: floatBounce 3s infinite ease-in-out;
-}
-
-.floating-wash:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.7);
-  animation-play-state: paused;
-}
-
-.floating-wash svg {
-  width: 20px;
-  height: 20px;
-  fill: white;
-}
-
-/* Gentle floating animation */
-@keyframes floatBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* Mobile Adjustments */
-@media screen and (max-width: 768px) {
   .floating-wash {
     bottom: 90px;
     right: 20px;
     padding: 10px 16px;
     font-size: 12px;
   }
-}
 
-
-/* ================= SOLAR WASHING SECTION ================= */
-.washing-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 40px;
-  max-width: 1100px;
-  margin: 0 auto;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(0, 229, 255, 0.15);
-  padding: 40px;
-  border-radius: 16px;
-}
-
-.washing-text {
-  flex: 1;
-  min-width: 300px;
-  text-align: left;
-}
-
-.washing-form-box {
-  flex: 0.8;
-  min-width: 300px;
-  background: rgba(1, 13, 23, 0.8);
-  padding: 30px;
-  border-radius: 16px;
-  border: 1px solid rgba(60, 255, 136, 0.4);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  width: 100%;
-}
-
-/* Solar Washing Mobile Adjustments */
-@media screen and (max-width: 768px) {
+  /* Solar Washing Mobile Adjustments */
   .washing-container {
     padding: 25px 20px;
     gap: 30px;
@@ -1144,8 +1133,8 @@ a.logo {
     font-size: 26px !important;
   }
   .washing-text ul {
-    text-align: left; /* Keep bullets readable on mobile */
-    display: inline-block; /* Centers the bullet block */
+    text-align: left; 
+    display: inline-block; 
   }
   .washing-form-box {
     padding: 25px 20px;
