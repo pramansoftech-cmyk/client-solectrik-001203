@@ -270,11 +270,15 @@ function updateLightboxContent() {
     mediaClone = document.createElement('video');
     mediaClone.src = currentLightboxElement.src; 
     mediaClone.autoplay = true; 
-    mediaClone.controls = true; 
+    mediaClone.muted = true;       /* Forces it to be silent */
+    mediaClone.loop = true;        /* Makes it loop endlessly like a GIF */
+    mediaClone.playsInline = true; /* Keeps it looking clean on mobile */
+    /* Notice: The 'controls' line has been completely deleted! */
   } else {
     mediaClone = document.createElement('img');
     mediaClone.src = currentLightboxElement.src;
   }
+  
   mediaClone.className = 'lightbox-content';
   mediaContainer.appendChild(mediaClone);
 }
