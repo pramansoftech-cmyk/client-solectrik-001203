@@ -246,39 +246,78 @@ document.querySelector('.next-arrow')?.addEventListener('click', () => { stopGal
 document.querySelector('.prev-arrow')?.addEventListener('click', () => { stopGalleryAutoPlay(); moveGalleryPrev(); startGalleryAutoPlay(); });
 
 // ==========================================
-// 3. PROJECT LIGHTBOX LOGIC
+// 3. PROJECT LIGHTBOX LOGIC (WITH SLIDER)
 // ==========================================
 const projectLightbox = document.getElementById('projectLightbox');
 const mediaContainer = document.getElementById('lightboxMediaContainer');
+let currentLightboxElement = null; // Tracks the currently viewing element
 
 function openLightbox(element) {
   if (!projectLightbox || !mediaContainer) return;
-  mediaContainer.innerHTML = ''; 
-  let mediaClone;
-  if (element.tagName === 'VIDEO') {
-    mediaClone = document.createElement('video');
-    mediaClone.src = element.src; mediaClone.autoplay = true; mediaClone.controls = true; 
-  } else {
-    mediaClone = document.createElement('img');
-    mediaClone.src = element.src;
-  }
-  mediaClone.className = 'lightbox-content';
-  mediaContainer.appendChild(mediaClone);
+  currentLightboxElement = element;
+  updateLightboxContent();
   projectLightbox.classList.add('show');
   document.body.classList.add('modal-open'); // Hides floating buttons
   stopGalleryAutoPlay(); 
 }
 
+function updateLightboxContent() {
+  if (!currentLightboxElement) return;
+  mediaContainer.innerHTML = ''; 
+  let mediaClone;
+  
+  if (currentLightboxElement.tagName === 'VIDEO') {
+    mediaClone = document.createElement('video');
+    mediaClone.src = currentLightboxElement.src; 
+    mediaClone.autoplay = true; 
+    mediaClone.controls = true; 
+  } else {
+    mediaClone = document.createElement('img');
+    mediaClone.src = currentLightboxElement.src;
+  }
+  mediaClone.className = 'lightbox-content';
+  mediaContainer.appendChild(mediaClone);
+}
+
+// Navigate to NEXT image
+function lightboxNext(event) {
+  if (event) event.stopPropagation(); // Prevents click from closing the background
+  if (!currentLightboxElement) return;
+  // Get next image, or loop back to the first one
+  currentLightboxElement = currentLightboxElement.nextElementSibling || currentLightboxElement.parentNode.firstElementChild;
+  updateLightboxContent();
+}
+
+// Navigate to PREVIOUS image
+function lightboxPrev(event) {
+  if (event) event.stopPropagation(); 
+  if (!currentLightboxElement) return;
+  // Get previous image, or loop back to the last one
+  currentLightboxElement = currentLightboxElement.previousElementSibling || currentLightboxElement.parentNode.lastElementChild;
+  updateLightboxContent();
+}
+
+// Close Lightbox
 function closeLightbox(event) {
   if (!projectLightbox) return;
-  if (event.target === projectLightbox || event.target.id === 'lightboxMediaContainer' || event.target.classList.contains('close-lightbox')) {
+  // Only close if clicking the background, the X, or passing a forced close
+  if (event.forceClose || event.target === projectLightbox || event.target.id === 'lightboxMediaContainer' || event.target.classList.contains('close-lightbox')) {
     projectLightbox.classList.remove('show');
     document.body.classList.remove('modal-open'); // Shows floating buttons
     mediaContainer.innerHTML = ''; 
+    currentLightboxElement = null;
     startGalleryAutoPlay(); 
   }
 }
 
+// Keyboard Support for Desktop Users (Arrows & Escape key)
+document.addEventListener('keydown', function(e) {
+  if (projectLightbox && projectLightbox.classList.contains('show')) {
+    if (e.key === 'ArrowRight') lightboxNext();
+    if (e.key === 'ArrowLeft') lightboxPrev();
+    if (e.key === 'Escape') closeLightbox({forceClose: true}); 
+  }
+});
 // ==========================================
 // 4. MODALS (CONSULTATION, SUBSIDY, AUTO-QUOTE)
 // ==========================================

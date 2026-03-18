@@ -172,8 +172,12 @@
 
 <div id="projectLightbox" class="lightbox" onclick="closeLightbox(event)">
   <span class="close-lightbox" onclick="closeLightbox(event)">×</span>
-  <div id="lightboxMediaContainer" class="lightbox-media-wrapper">
-  </div>
+  
+  <button class="lightbox-arrow prev" onclick="lightboxPrev(event)">❮</button>
+  
+  <div class="lightbox-media-wrapper" id="lightboxMediaContainer"></div>
+  
+  <button class="lightbox-arrow next" onclick="lightboxNext(event)">❯</button>
 </div>
 
 <footer class="main-footer">

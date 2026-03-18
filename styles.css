@@ -1089,6 +1089,41 @@ body.modal-open .floating-sim {
 #wash-form-target {
   scroll-margin-top: 110px; /* Creates a perfect invisible buffer below the navbar */
 }
+
+/* ================= LIGHTBOX NAVIGATION ARROWS ================= */
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.05);
+  color: #3cff88;
+  border: 1px solid #3cff88;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.lightbox-arrow:hover {
+  background: #3cff88;
+  color: #000;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-arrow.prev { left: 30px; }
+.lightbox-arrow.next { right: 30px; }
+
+/* Lightbox Arrows Mobile Fix */
+  .lightbox-arrow { width: 40px; height: 40px; font-size: 18px; }
+  .lightbox-arrow.prev { left: 10px; }
+  .lightbox-arrow.next { right: 10px; }
 /* ================= MOBILE RESPONSIVENESS ================= */
 @media screen and (max-width: 900px) {
   .quote-container, .form-grid { grid-template-columns: 1fr; }
