@@ -1259,6 +1259,8 @@ body.modal-open .floating-sim {
     text-align: center; 
     gap: 30px;
   }
+
+
   .footer-right iframe { max-width: 100%; margin: auto; }
   .consultation-form-wrapper { padding: 25px; }
 
@@ -1284,4 +1286,42 @@ body.modal-open .floating-sim {
     padding: 10px 14px;
     font-size: 12px;
   }
+}
+
+
+/* ================= WHATSAPP LEAD MODAL ================= */
+.floating-wa { cursor: pointer; }
+
+.wa-modal {
+  display: none; /* Hides it by default */
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100001; 
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.wa-modal.show {
+  display: flex; /* Shows it when clicked */
+}
+
+.wa-modal-content {
+  background: #00482f;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.close-wa {
+  position: absolute;
+  top: 15px; right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #b7b3b3;
 }

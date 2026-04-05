@@ -397,3 +397,57 @@ const navLinks = document.querySelector('.nav-links');
 if (mobileMenu && navLinks) {
   mobileMenu.addEventListener('click', () => { navLinks.classList.toggle('active'); });
 }
+
+// ==========================================
+// WHATSAPP LEAD CAPTURE LOGIC
+// ==========================================
+const waModal = document.getElementById('waModal');
+
+function openWaModal() {
+  waModal.classList.add('show');
+}
+
+function closeWaModal(event) {
+  // Close if they click the 'X' or the dark background
+  if (!event || event.target === waModal || event.target.classList.contains('close-wa')) {
+    waModal.classList.remove('show');
+  }
+}
+
+// Handle Form Submission
+document.getElementById('waLeadForm').addEventListener('submit', function(e) {
+  e.preventDefault(); // Stop page reload
+
+  // 1. Get the user's data
+  const name = document.getElementById('waName').value;
+  const phone = document.getElementById('waPhone').value;
+
+  // 2. Send data to Formspree (REPLACE THIS URL WITH YOUR ACTUAL FORMSPREE LINK!)
+  const formspreeEndpoint = "https://formspree.io/f/xykbbaaq"; 
+
+  const formData = new FormData();
+  formData.append("Name", name);
+  formData.append("Phone", phone);
+  formData.append("Lead Source", "WhatsApp Floating Button");
+
+  fetch(formspreeEndpoint, {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    // 3. Close the modal & Reset form
+    closeWaModal();
+    document.getElementById('waLeadForm').reset();
+    
+    // 4. Immediately open WhatsApp with the pre-filled message
+    const waMessage = "Hello Solectrik Energy! ☀️\n\nI'm exploring solar solutions and would love to know more about your installations and the available government subsidies. ⚡";
+    const waURL = `https://wa.me/917774046466?text=${encodeURIComponent(waMessage)}`;
+    window.open(waURL, "_blank");
+    
+  }).catch(error => {
+    // Failsafe: If the form fails to send, still let them go to WhatsApp so you don't lose the lead!
+    console.error("Error sending lead data.", error);
+    closeWaModal();
+    window.open("https://wa.me/917774046466", "_blank");
+  });
+});
